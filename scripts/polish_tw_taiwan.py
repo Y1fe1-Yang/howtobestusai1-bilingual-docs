@@ -8,8 +8,12 @@ TOKEN_RE = re.compile(r"(<[^>]+>)")
 
 # 词汇优先替换（偏台湾用语）
 LEXICAL_REPLACEMENTS: list[tuple[str, str]] = [
+    ("爲", "為"),
+    ("這裏", "這裡"),
+    ("看着", "看著"),
     ("視頻", "影片"),
     ("數據", "資料"),
+    ("存儲", "儲存"),
     ("文件", "檔案"),
     ("文檔", "文件"),
     ("軟件", "軟體"),
@@ -24,6 +28,7 @@ LEXICAL_REPLACEMENTS: list[tuple[str, str]] = [
     ("代碼", "程式碼"),
     ("配置", "設定"),
     ("調用", "呼叫"),
+    ("命令行", "命令列"),
     ("創建", "建立"),
     ("創建後", "建立後"),
     ("獲取", "取得"),
@@ -70,7 +75,8 @@ def polish_text(text: str) -> str:
         out = out.replace(src, dst)
     for src, dst in LEXICAL_REPLACEMENTS:
         out = out.replace(src, dst)
-    out = re.sub(r"(?<!請)幫我", "請幫我", out)
+    out = re.sub(r"(?<![\u4e00-\u9fffA-Za-z0-9])幫我", "請幫我", out)
+    out = re.sub(r"([能可會要想])請幫我", r"\1幫我", out)
     out = re.sub(r"請請幫我", "請幫我", out)
     return out
 
