@@ -1,0 +1,850 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>歡迎使用Happycapy</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3096ea04-9986-8011-8520-f6984c65445d" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">👋</span></div><!-- BREADCRUMB_START -->
+<style>
+.hc-breadcrumb {
+  font-size: 14px;
+  margin-bottom: 0.75em;
+}
+.hc-breadcrumb-sep {
+  margin: 0 0.35em;
+  opacity: 0.6;
+}
+</style>
+<nav class="hc-breadcrumb" aria-label="Breadcrumb">
+  <a href="../WaytoAGI%20x%20Happycapy%203096ea04998680d3ba0ef82161f9c1ce_tw.html">首頁</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <a href="../WaytoAGI%20x%20Happycapy%203096ea04998680d3ba0ef82161f9c1ce_tw.html">WaytoAGI x Happycapy</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <span aria-current="page">歡迎使用Happycapy</span>
+</nav>
+<!-- BREADCRUMB_END -->
+
+
+
+<h1 class="page-title" dir="auto">歡迎使用Happycapy</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="3096ea04-9986-81b9-9a89-d641926356bb" class="">歡迎使用Happycapy</h1></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8104-925d-cffe1882526e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81fc-9859-f22ec2762202" class=""><strong>HappyCapy 官網直通車：</strong>https://happycapy.ai/ </p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-818a-95d0-e16abd7ccd36" class="">在這裏，你可以看到機智可愛的 HappyCapy 如何成爲你的 AI 夥伴，一起探索無限可能！</p></div><div style="display:contents" dir="auto"><h2 id="3096ea04-9986-81bb-9324-e9f6aa069c5d" class=""><strong>Happycapy是什麼？</strong></h2></div><div style="display:contents" dir="ltr"><figure id="3096ea04-9986-8036-9b6f-d678e55eb04a"><div class="source"><a href="%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8Happycapy/x_video(1080).mp4">attachment:98a5572f-6b34-4d19-a6d4-a72decefae7a:x_video(1080).mp4</a></div></figure></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8105-9b72-f4da4479ac82" class=""><strong>一臺運行在瀏覽器裏的 Agent 原生計算機。</strong></p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-818f-974d-e225144bd1dd" class="">由 Claude Code 驅動，爲所有人設計。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-819e-ba6d-c48c69375adc" class="">不需要配環境，不需要學命令行，不需要懂技術。打開瀏覽器，說出你的需求，看着它幫你完成工作。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-814b-ade4-fdee718f39f9" class="">生成圖片、剪輯視頻、處理數據、做網頁、寫論文...以前需要學十幾個軟件才能做的事，現在只需要說出來。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8163-a576-f96426ec7b66" class="">過去一年，我們看到 AI Agent 能做的事越來越多。但大部分 Agent 工具都是爲開發者設計的——要會用命令行，要懂得配置環境，要知道怎麼處理安全問題。我們覺得，Agent 不應該只屬於懂技術的人。所以我們做了 HappyCapy。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8140-a3ea-e213e474d430" class=""><strong>💻傳統電腦的邏輯：</strong> 裝軟件 → 學軟件 → 用軟件完成任務</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81da-9eb7-de3f2d71240f" class=""><strong>🤖Agent 原生計算機的邏輯：</strong> 說需求 → AI 調用工具 → 直接給結果</p></div><div style="display:contents" dir="auto"><h2 id="3096ea04-9986-818b-a3ad-fbf542fe4078" class=""><strong>HappyCapy能做什麼？</strong></h2></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81d5-8756-c92c9fce359b" class="">打開 HappyCapy，說幾句話就能：</p></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-8186-90e5-d6ac58c2f2c8" class="bulleted-list"><li style="list-style-type:disc">🎨 <strong>生成圖片和視頻</strong> - 海報、配圖、短視頻、動畫</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-81d7-b519-e9bf7e6eb7b3" class="bulleted-list"><li style="list-style-type:disc">📄 <strong>處理文檔和數據</strong> - Word、Excel、PPT、PDF、圖表</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-81ec-b61f-e3d2f1d00fbb" class="bulleted-list"><li style="list-style-type:disc">🌐 <strong>做網頁和應用</strong> - 設計界面、寫代碼、自動部署上線</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-81ae-b5e6-ca214680366e" class="bulleted-list"><li style="list-style-type:disc">📚 <strong>寫論文和報告</strong> - 文獻綜述、學術論文、標準引用</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-81dc-af21-e2a6af534f45" class="bulleted-list"><li style="list-style-type:disc">⚡ <strong>自動化日常工作</strong> - 整理文件、發郵件、做表格、分析數據</li></ul></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81b4-a471-c843768cd2d6" class="">以前需要學十幾個軟件、在不同工具間反覆切換的事，現在一個地方搞定。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8179-bd41-f49250a1943f" class=""><strong>雲端運行，零門檻</strong></p></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-810f-a1e8-e9efc34a6bb0" class="bulleted-list"><li style="list-style-type:disc">不用安裝軟件或配環境</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-81c5-bfe5-d753c67111be" class="bulleted-list"><li style="list-style-type:disc">不用擔心在本地亂改文件</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-81f4-aa61-c72ad5abbfb7" class="bulleted-list"><li style="list-style-type:disc">內置沙盒，安全可靠</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-8119-8347-ef491c9ea08d" class="bulleted-list"><li style="list-style-type:disc">手機也能用</li></ul></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8151-b448-d74c75a70484" class=""><strong>對話式操作，和屏幕背後勤勞的 HappyCapy 聊天</strong></p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8145-847c-fd42dd371f04" class="">不用學菜單、快捷鍵、代碼。直接說需求：</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-816c-911c-f24d25d93ebb" class="">
+</p></div><div style="display:contents" dir="ltr"><div id="3096ea04-9986-8193-b2d0-c0da50d12824" class="collection-content"><h4 class="collection-title">一句話案例</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>名稱</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/clock_gray.svg" style="width:14px;height:14px;display:block"/></span>創建時間</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>標籤</th></tr></thead><tbody><tr id="3096ea04-9986-81c6-8aa2-e95ef10017fb"><td class="cell-title"><a href="%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8Happycapy/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%A1%88%E4%BE%8B/%E5%86%85%E5%AE%B9%E5%88%9B%E4%BD%9C%203096ea04998681c68aa2e95ef10017fb_tw.html">內容創作</a></td><td class="cell-shIa"><time>@2026年2月16日 13:28</time></td><td class="cell-JO;t"></td></tr><tr id="3096ea04-9986-81c1-b315-f10506bee25d"><td class="cell-title"><a href="%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8Happycapy/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%A1%88%E4%BE%8B/%E8%82%A1%E7%A5%A8%E5%88%86%E6%9E%90%203096ea04998681c1b315f10506bee25d_tw.html">股票分析</a></td><td class="cell-shIa"><time>@2026年2月16日 13:28</time></td><td class="cell-JO;t"></td></tr><tr id="3096ea04-9986-817b-b900-c16d8e1674b0"><td class="cell-title"><a href="%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8Happycapy/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%A1%88%E4%BE%8B/%E6%96%87%E6%A1%A3%E5%A4%84%E7%90%86%203096ea049986817bb900c16d8e1674b0_tw.html">文檔處理</a></td><td class="cell-shIa"><time>@2026年2月16日 13:28</time></td><td class="cell-JO;t"></td></tr><tr id="3096ea04-9986-819b-87a4-c7f527d82ef0"><td class="cell-title"><a href="%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8Happycapy/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%A1%88%E4%BE%8B/Vibe-Coding%203096ea049986819b87a4c7f527d82ef0_tw.html">Vibe-Coding</a></td><td class="cell-shIa"><time>@2026年2月16日 13:28</time></td><td class="cell-JO;t"></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><h2 id="3096ea04-9986-8101-afef-e95e8edf72ec" class="">HappyCapy背後的故事</h2></div><div style="display:contents" dir="auto"><h3 id="3096ea04-9986-8136-a042-ca19772cf056" class="">我們自己先變成了 AI native 團隊</h3></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81fa-858e-f04df50c539f" class="">2025 年 1 月，Claude Code 出來了。它改變了編碼的模式——開發者可以用自然語言寫代碼，效率提升了好幾倍。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-818c-b0f3-cb14edee02fa" class="">我們團隊用得很爽。但同時我們也在想：<strong>爲什麼 AI 的門檻還是這麼高？</strong></p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81a6-be65-c52e8d917fad" class="">想用好 AI，要麼懂命令行、會配環境、學提示詞，要麼就只能停留在聊天窗口裏，很難發揮出 AI 的全部能力。爲什麼不能像用電腦一樣簡單？</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81d3-8f6f-fa595c070feb" class=""><strong>AI 應該是平權的。</strong></p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8108-9e3b-ec57e4d049d6" class="">不管你是什麼職業、什麼背景——每個人都應該平等地享受 AI 帶來的生產力提升。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8110-b640-e5ecec079b72" class="">所以我們給自己做了一個工具。用上之後，整個團隊的工作方式改變了。不懂技術的人也能自己寫代碼、做網頁、處理數據。每個人都能把想法變成現實。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81f0-9ae1-c5fca01b84ab" class=""><strong>每個人都成了超級個體。</strong></p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-814a-b5a1-f115515423e1" class="">然後我們把這套工作方式產品化了，就是 HappyCapy。</p></div><div style="display:contents" dir="auto"><h3 id="3096ea04-9986-81e8-982c-cfc149c12384" class="">爲什麼是Capy（卡皮巴拉-<strong>Capybara-水豚</strong>）</h3></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81a6-96df-cf2b2456405e" class="">水豚溫和、友善、與所有動物和諧相處。你能在網上看到水豚和猴子、鳥、鱷魚、甚至貓狗都能玩在一起。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8192-9d3b-d19891ad4002" class="">這正是我們想要的：一個和所有人都能&quot;相處&quot;的 AI 工具。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8150-9beb-c258d0f28854" class="">Happy + Capy = 快樂的水豚 = AI應該使人 變得快樂而不是焦慮。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-814a-ad78-c5e99957fb08" class="">我們希望大家用 HappyCapy 的時候，就像養一隻卡皮巴拉一樣——chill，沒有焦慮，迴歸到生活本身。</p></div><div style="display:contents" dir="ltr"><figure id="3096ea04-9986-8157-953f-e4011ee00998" class="image"><a href="%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8Happycapy/baf627539ee50aa2db9733c8d2ad1f79.png"><img style="width:691.982177734375px" src="%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8Happycapy/baf627539ee50aa2db9733c8d2ad1f79.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="3096ea04-9986-8180-b481-e0b1511f52b7" class=""><strong>我們的願景</strong></h3></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81cd-8eb2-f3c9bebf63b1" class="">讓所有人都用上 AI，自動化自己的工作流，減少人的重複性工作。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81b2-9409-d6ffb2bab5d7" class=""><mark class="highlight-yellow"><strong>HappyCapy, HappyYou.</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81e2-a81f-e5ac6c148f5f" class="">我們不覺得 AI 是用來取代人的。我們覺得 AI 是用來讓人更像人的——把重複的、煩人的、消耗時間的事情交給 AI，把創意、判斷、決策留給自己。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81cf-b9a5-ded5e0217aa1" class=""><strong>你只需要專注於做什麼，而不是怎麼做。</strong></p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81b3-a246-d2159c823647" class="">你不用糾結今天該用哪個模型，不用被每天 AI 新突破的新聞搞得焦慮。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-810e-9059-f4c2b058869f" class="">生圖用什麼模型最好？視頻該選哪個？這個任務適合 Claude 還是 GPT？</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81ac-99d1-e44ea0a654e5" class=""><strong>別想了。HappyCapy 會幫你選。</strong></p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-815b-a890-e5db55c30fed" class="">爲了讓你真正享受做事，我們提供了 Max plan——無限 token，完全沒有焦慮。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8129-8c65-cb80d64458c0" class="">不管你是創作者、開發者、學生、上班族、還是自由職業者——只要你有想法，HappyCapy 就能幫你把想法變成現實。</p></div><div style="display:contents" dir="auto"><h1 id="3096ea04-9986-81b2-b7d8-ded3eb2d76d3" class=""><strong><a href="https://happycapy.ai/">開始使用 HappyCapy →</a></strong></h1></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-817d-bb9d-eec93115d84c" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
+<style>
+#lang-toggle-select {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
+  color: #24292f;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+#lang-toggle-select:hover {
+  background: #f6f8fa;
+}
+</style>
+<script>
+(function () {
+  var KEY = 'site_lang_pref';
+  var pref = localStorage.getItem(KEY);
+  if (!pref) {
+    pref = 'en';
+    localStorage.setItem(KEY, pref);
+  }
+
+  function toEn(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
+    return pathname.replace(/\.html$/i, '_en.html');
+  }
+
+  function toZh(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
+  }
+
+  var rawPath = decodeURI(window.location.pathname || '');
+  var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
+
+  if (pref === 'en' && !isEn) {
+    var enPath = toEn(rawPath);
+    if (enPath !== rawPath) {
+      window.location.replace(encodeURI(enPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh' && !isZh) {
+    var zhPath = toZh(rawPath);
+    if (zhPath !== rawPath) {
+      window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
+    var currentPath = decodeURI(window.location.pathname || '');
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
+    localStorage.setItem(KEY, targetLang);
+    window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.appendChild(select);
+  });
+})();
+</script>
+<!-- LANG_TOGGLE_END --></body></html>

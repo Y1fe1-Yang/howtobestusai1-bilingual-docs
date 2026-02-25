@@ -737,7 +737,7 @@ blockquote.quote-large {
 2. 按日期排序
 3. 生成一份干净的新表格</code></pre></div><div dir="auto" style="display:contents"><p class="" id="30a6ea04-9986-80af-96b0-e858417ef652"><strong>Step 3:</strong> Wait for processing to complete</p></div><div dir="auto" style="display:contents"><p class="" id="30a6ea04-9986-80bb-8794-d1a9e2a3b2f0">HappyCapy will read the file, process the data, generate new files, and tell you what was changed. The processed files will be saved in the outputs folder.</p></div><div dir="ltr" style="display:contents"><figure class="callout" id="30a6ea04-9986-8066-9924-fdd4813769e0" style="white-space:pre-wrap;display:flex"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">📌 Supported files: Image (JPG/PNG), Document (PDF/Word/Excel), Video (MP4), Data (CSV/JSON), Code (all languages). The maximum size of a single file is 100MB.</div></figure></div><div dir="auto" style="display:contents"><hr id="30a6ea04-9986-8000-aa80-ee837d40d4fb"/></div><div dir="auto" style="display:contents"><h3 class="" id="30a6ea04-9986-8032-94b7-f48bdb2bb668">💡 Quick Tips</h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="30a6ea04-9986-8082-b70d-f972300c155a"><li style="list-style-type:disc"><strong>State your needs clearly:</strong> The more specific the better</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="30a6ea04-9986-803b-b90e-eae2ce7c3f26"><li style="list-style-type:disc"><strong>Say step by step:</strong> Adjust as you go</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="30a6ea04-9986-801f-b16b-cffc925e2e59"><li style="list-style-type:disc"><strong>Give examples:</strong> Upload reference pictures, HappyCapy will learn</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="30a6ea04-9986-80a4-a738-d3564d5628cd"><li style="list-style-type:disc"><strong>If you are not satisfied, say:</strong> Point out the problem directly</li></ul></div><div dir="auto" style="display:contents"><hr id="3096ea04-9986-8157-a20b-d166766c5881"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
 <style>
-#lang-toggle-btn {
+#lang-toggle-select {
   position: fixed;
   top: 16px;
   right: 16px;
@@ -746,13 +746,13 @@ blockquote.quote-large {
   background: #ffffff;
   color: #24292f;
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 6px 10px;
   font-size: 13px;
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
-#lang-toggle-btn:hover {
+#lang-toggle-select:hover {
   background: #f6f8fa;
 }
 </style>
@@ -768,16 +768,26 @@ blockquote.quote-large {
   function toEn(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
     if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
     return pathname.replace(/\.html$/i, '_en.html');
   }
 
   function toZh(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
-    return pathname.replace(/_en\.html$/i, '.html');
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
   }
 
   var rawPath = decodeURI(window.location.pathname || '');
   var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
 
   if (pref === 'en' && !isEn) {
     var enPath = toEn(rawPath);
@@ -787,7 +797,7 @@ blockquote.quote-large {
     }
   }
 
-  if (pref === 'zh' && isEn) {
+  if (pref === 'zh' && !isZh) {
     var zhPath = toZh(rawPath);
     if (zhPath !== rawPath) {
       window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
@@ -795,23 +805,45 @@ blockquote.quote-large {
     }
   }
 
-  var btn = document.createElement('button');
-  btn.id = 'lang-toggle-btn';
-  btn.type = 'button';
-  btn.textContent = isEn ? '中文' : 'EN';
-  btn.title = isEn ? '切换到中文' : 'Switch to English';
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
 
-  btn.addEventListener('click', function () {
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
     var currentPath = decodeURI(window.location.pathname || '');
-    var currentIsEn = /_en\.html$/i.test(currentPath);
-    var targetPath = currentIsEn ? toZh(currentPath) : toEn(currentPath);
-    var targetLang = currentIsEn ? 'zh' : 'en';
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
     localStorage.setItem(KEY, targetLang);
     window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
   });
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.body.appendChild(btn);
+    document.body.appendChild(select);
   });
 })();
 </script>

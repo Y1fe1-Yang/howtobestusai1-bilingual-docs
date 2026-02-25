@@ -735,7 +735,7 @@ blockquote.quote-large {
 <h1 class="page-title" dir="auto">与其他平台的集成</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="3096ea04-9986-81b7-aa0a-dd5e31af0025" class="">与其他平台的集成</h1></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8164-bd1c-f6bc55df621a" class=""><strong>HappyCapy 官网直通车：</strong>https://happycapy.ai/ 在这里，你可以看到机智可爱的 HappyCapy 如何成为你的 AI 伙伴，一起探索无限可能！</p></div><div style="display:contents" dir="auto"><hr id="3096ea04-9986-81d1-b808-fe97c170bd14"/></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8165-9fe5-fe162ae0b5b7" class="">HappyCapy 可以连接你常用的平台，让工作更高效。目前支持 GitHub 和 Notion 的集成，只需要简单的 Token 配置就能使用。</p></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3096ea04-9986-8179-a66f-f513dfb868d4"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">💡 什么是 Token？Token 就像是你给 HappyCapy 的一把钥匙，让它可以代表你访问其他平台。别担心，整个过程很简单！</div></figure></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8127-b6e6-e48826e0d2f6" class="">
 </p></div><div style="display:contents" dir="auto"><h2 id="3096ea04-9986-819a-8833-d23516a44257" class="">支持的平台（更新中）</h2></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81f0-8fa5-c8be4f788186" class="">点击下面的子页面查看详细教程：</p></div><div style="display:contents" dir="ltr"><figure id="3096ea04-9986-81d0-95fe-ce36eafa5146" class="link-to-page"><a href="%E4%B8%8E%E5%85%B6%E4%BB%96%E5%B9%B3%E5%8F%B0%E7%9A%84%E9%9B%86%E6%88%90/GitHub%20%E9%9B%86%E6%88%90%203096ea04998681d095fece36eafa5146.html"><span class="icon">🐙</span>GitHub 集成</a></figure></div><div style="display:contents" dir="ltr"><figure id="3096ea04-9986-81c0-9d2e-fbf805bac461" class="link-to-page"><a href="%E4%B8%8E%E5%85%B6%E4%BB%96%E5%B9%B3%E5%8F%B0%E7%9A%84%E9%9B%86%E6%88%90/Notion%20%E9%9B%86%E6%88%90%203096ea04998681c09d2efbf805bac461.html"><span class="icon">📝</span>Notion 集成</a></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
 <style>
-#lang-toggle-btn {
+#lang-toggle-select {
   position: fixed;
   top: 16px;
   right: 16px;
@@ -744,13 +744,13 @@ blockquote.quote-large {
   background: #ffffff;
   color: #24292f;
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 6px 10px;
   font-size: 13px;
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
-#lang-toggle-btn:hover {
+#lang-toggle-select:hover {
   background: #f6f8fa;
 }
 </style>
@@ -766,16 +766,26 @@ blockquote.quote-large {
   function toEn(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
     if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
     return pathname.replace(/\.html$/i, '_en.html');
   }
 
   function toZh(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
-    return pathname.replace(/_en\.html$/i, '.html');
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
   }
 
   var rawPath = decodeURI(window.location.pathname || '');
   var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
 
   if (pref === 'en' && !isEn) {
     var enPath = toEn(rawPath);
@@ -785,7 +795,7 @@ blockquote.quote-large {
     }
   }
 
-  if (pref === 'zh' && isEn) {
+  if (pref === 'zh' && !isZh) {
     var zhPath = toZh(rawPath);
     if (zhPath !== rawPath) {
       window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
@@ -793,23 +803,45 @@ blockquote.quote-large {
     }
   }
 
-  var btn = document.createElement('button');
-  btn.id = 'lang-toggle-btn';
-  btn.type = 'button';
-  btn.textContent = isEn ? '中文' : 'EN';
-  btn.title = isEn ? '切换到中文' : 'Switch to English';
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
 
-  btn.addEventListener('click', function () {
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
     var currentPath = decodeURI(window.location.pathname || '');
-    var currentIsEn = /_en\.html$/i.test(currentPath);
-    var targetPath = currentIsEn ? toZh(currentPath) : toEn(currentPath);
-    var targetLang = currentIsEn ? 'zh' : 'en';
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
     localStorage.setItem(KEY, targetLang);
     window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
   });
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.body.appendChild(btn);
+    document.body.appendChild(select);
   });
 })();
 </script>

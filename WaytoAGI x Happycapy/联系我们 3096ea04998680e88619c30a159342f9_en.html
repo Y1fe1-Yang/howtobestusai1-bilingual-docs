@@ -734,7 +734,7 @@ blockquote.quote-large {
 
 <h1 class="page-title" dir="auto">Contact us</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div dir="auto" style="display:contents"><h1 class="" id="3096ea04-9986-8183-90e5-dcffe1ee0ed6">Contact us</h1></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81e5-ad38-e69b73b6f085"><strong>HappyCapy Official website express train:</strong><a href="https://happycapy.ai/">https://happycapy.ai/</a>Here, you can see how the cute and witty HappyCapy can become your AI partner and explore infinite possibilities together!</p></div><div dir="auto" style="display:contents"><hr id="3096ea04-9986-8113-8403-feea883e4144"/></div><div dir="auto" style="display:contents"><h2 class="" id="3096ea04-9986-81d5-9fe8-d1857c9055cf">💬 Join our community</h2></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81de-a818-fbd837aa19a8">Have a question? Want to share your creativity? Or just want to chat with other HappyCapy users?</p></div><div dir="ltr" style="display:contents"><figure class="block-color-blue_background callout" id="3096ea04-9986-8197-acf7-c346ab97f1aa" style="white-space:pre-wrap;display:flex"><div style="font-size:1.5em"><span class="icon">💬</span></div><div style="width:100%"><strong>🎮 Join the Discord community<br/><br/></strong>Here you can:<br/>• Get instant help and technical support<br/>• Share the Skills and automations you create<br/>• Participate in product discussions and feature suggestions<br/>• Meet like-minded AI enthusiasts<br/><br/><strong>👉 Join now:</strong><code><strong><a href="https://discord.gg/cjUd3naR">https://discord.gg/cjUd3naR</a></strong></code></div></figure></div><div dir="ltr" style="display:contents"><figure class="block-color-gray_background callout" id="3096ea04-9986-81dc-b3aa-c66c82b6a907" style="white-space:pre-wrap;display:flex"><div style="font-size:1.5em"><span class="icon">🐦</span></div><div style="width:100%"><strong>🐦 Follow us on X (Twitter)<br/><br/></strong>• Get product updates and new feature releases<br/>• Learn about AI industry trends for the first time<br/>• Participate in topic discussions and interactions<br/><br/><strong>👉 Follow now:</strong><code><strong><a href="https://x.com/happycapyai">https://x.com/happycapyai</a></strong></code></div></figure></div><div dir="ltr" style="display:contents"><figure class="block-color-red_background callout" id="3096ea04-9986-81a6-a71e-c07928f7092c" style="white-space:pre-wrap;display:flex"><div style="font-size:1.5em"><span class="icon">🎥</span></div><div style="width:100%"><strong>🎥 Subscribe to YouTube channel<br/><br/></strong>• Watch detailed feature tutorials<br/>• Learn techniques for creating and using Skills<br/>• View practical case demonstrations<br/><br/><strong>👉 Subscribe now:</strong><code><strong><a href="https://www.youtube.com/@happycapyai">https://www.youtube.com/@happycapyai</a></strong></code></div></figure></div><div dir="ltr" style="display:contents"><figure class="block-color-teal_background callout" id="3096ea04-9986-818d-8d41-cd3375227c59" style="white-space:pre-wrap;display:flex"><div style="font-size:1.5em"><span class="icon">💬</span></div><div style="width:100%"><strong>💬 Join the WeChat group<br/><br/></strong>WaytoAGI × HappyCapy Chinese Community<br/><br/>• In-depth communication with Chinese users<br/>• Share usage experiences and ideas<br/>• Get support and help in Chinese<br/><br/>Let’s explore the infinite possibilities of AI together!</div></figure></div><div dir="auto" style="display:contents"><h2 class="" id="3096ea04-9986-81cd-bd70-ece357ca698c">📮 Other contact information</h2></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-8108-8874-ccdf675d7cb2"><li style="list-style-type:disc"><strong>Official website</strong>：<a href="https://happycapy.ai">https://happycapy.ai</a></li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-8162-b5c7-e89f6ccf7178"><li style="list-style-type:disc"><strong>Documentation feedback</strong>: If you find problems during use or have suggestions for improvements, please feel free to tell us</li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
 <style>
-#lang-toggle-btn {
+#lang-toggle-select {
   position: fixed;
   top: 16px;
   right: 16px;
@@ -743,13 +743,13 @@ blockquote.quote-large {
   background: #ffffff;
   color: #24292f;
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 6px 10px;
   font-size: 13px;
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
-#lang-toggle-btn:hover {
+#lang-toggle-select:hover {
   background: #f6f8fa;
 }
 </style>
@@ -765,16 +765,26 @@ blockquote.quote-large {
   function toEn(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
     if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
     return pathname.replace(/\.html$/i, '_en.html');
   }
 
   function toZh(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
-    return pathname.replace(/_en\.html$/i, '.html');
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
   }
 
   var rawPath = decodeURI(window.location.pathname || '');
   var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
 
   if (pref === 'en' && !isEn) {
     var enPath = toEn(rawPath);
@@ -784,7 +794,7 @@ blockquote.quote-large {
     }
   }
 
-  if (pref === 'zh' && isEn) {
+  if (pref === 'zh' && !isZh) {
     var zhPath = toZh(rawPath);
     if (zhPath !== rawPath) {
       window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
@@ -792,23 +802,45 @@ blockquote.quote-large {
     }
   }
 
-  var btn = document.createElement('button');
-  btn.id = 'lang-toggle-btn';
-  btn.type = 'button';
-  btn.textContent = isEn ? '中文' : 'EN';
-  btn.title = isEn ? '切换到中文' : 'Switch to English';
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
 
-  btn.addEventListener('click', function () {
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
     var currentPath = decodeURI(window.location.pathname || '');
-    var currentIsEn = /_en\.html$/i.test(currentPath);
-    var targetPath = currentIsEn ? toZh(currentPath) : toEn(currentPath);
-    var targetLang = currentIsEn ? 'zh' : 'en';
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
     localStorage.setItem(KEY, targetLang);
     window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
   });
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.body.appendChild(btn);
+    document.body.appendChild(select);
   });
 })();
 </script>

@@ -741,7 +741,7 @@ Token: ntn_你的token
 页面 ID: 3065ab5584b5803e8572fcb253106e5a
 新内容: [你想添加的内容]</code></pre></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-816a-891e-d9b699885dab">HappyCapy will automatically complete the operation for you!</p></div><div dir="auto" style="display:contents"><hr id="3096ea04-9986-8112-8a98-fda6f49a4f97"/></div><div dir="auto" style="display:contents"><h2 class="" id="3096ea04-9986-8162-8269-d816f56c81e2">💡 Tips for use</h2></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-81ab-8edd-f8cfd3bd679c"><li style="list-style-type:disc"><strong>Read the page:</strong>"Help me read the contents of this Notion page"</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-81b7-8cfa-e250ead1d41d"><li style="list-style-type:disc"><strong>Create page:</strong>"Help me create a new page in Notion"</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-81f1-bf11-ded27a325f31"><li style="list-style-type:disc"><strong>Organize notes:</strong>"Organize this conversation into Notion page"</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-8187-af76-c1d121983e9b"><li style="list-style-type:disc"><strong>Batch operations:</strong>"Help me batch update these Notion pages"</li></ul></div><div dir="auto" style="display:contents"><hr id="3096ea04-9986-81dc-879f-ca4888c6b470"/></div><div dir="auto" style="display:contents"><h2 class="" id="3096ea04-9986-81b0-b98f-d15afdd5b637">❓ FAQ</h2></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-817c-af26-e2a9b2aa59fe">Why does it prompt "page not found"?</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-810f-ade8-dc1e0081860b">Check whether page authorization is completed. Remember to add your Integration in the Connections of the page!</p></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-81d3-bd51-ce9d7ab564ef">Do subpages also need authorization?</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-817e-ac04-f1d7e1d5b61a">If the parent page has been authorized, the child page will automatically inherit the permissions. However, if the subpage is created separately, separate authorization is required.</p></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-8148-b69e-d76da575b36f">Will the Token expire?</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-8161-b632-ecfebfb601aa">The Integration Token of Notion will not expire unless you manually delete or regenerate it.</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
 <style>
-#lang-toggle-btn {
+#lang-toggle-select {
   position: fixed;
   top: 16px;
   right: 16px;
@@ -750,13 +750,13 @@ Token: ntn_你的token
   background: #ffffff;
   color: #24292f;
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 6px 10px;
   font-size: 13px;
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
-#lang-toggle-btn:hover {
+#lang-toggle-select:hover {
   background: #f6f8fa;
 }
 </style>
@@ -772,16 +772,26 @@ Token: ntn_你的token
   function toEn(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
     if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
     return pathname.replace(/\.html$/i, '_en.html');
   }
 
   function toZh(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
-    return pathname.replace(/_en\.html$/i, '.html');
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
   }
 
   var rawPath = decodeURI(window.location.pathname || '');
   var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
 
   if (pref === 'en' && !isEn) {
     var enPath = toEn(rawPath);
@@ -791,7 +801,7 @@ Token: ntn_你的token
     }
   }
 
-  if (pref === 'zh' && isEn) {
+  if (pref === 'zh' && !isZh) {
     var zhPath = toZh(rawPath);
     if (zhPath !== rawPath) {
       window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
@@ -799,23 +809,45 @@ Token: ntn_你的token
     }
   }
 
-  var btn = document.createElement('button');
-  btn.id = 'lang-toggle-btn';
-  btn.type = 'button';
-  btn.textContent = isEn ? '中文' : 'EN';
-  btn.title = isEn ? '切换到中文' : 'Switch to English';
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
 
-  btn.addEventListener('click', function () {
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
     var currentPath = decodeURI(window.location.pathname || '');
-    var currentIsEn = /_en\.html$/i.test(currentPath);
-    var targetPath = currentIsEn ? toZh(currentPath) : toEn(currentPath);
-    var targetLang = currentIsEn ? 'zh' : 'en';
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
     localStorage.setItem(KEY, targetLang);
     window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
   });
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.body.appendChild(btn);
+    document.body.appendChild(select);
   });
 })();
 </script>

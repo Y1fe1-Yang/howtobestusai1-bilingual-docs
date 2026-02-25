@@ -752,7 +752,7 @@ blockquote.quote-large {
 请团队协作完成，并给我一个可直接使用的网页应用！</code></pre></div><div style="display:contents" dir="ltr"><figure id="3096ea04-9986-8172-b03b-eaacceecf625" class="image"><a href="Multi-Agent%20Team%20%E6%8C%87%E5%8D%97/QQ_1771162342326.png"><img style="width:2613px" src="Multi-Agent%20Team%20%E6%8C%87%E5%8D%97/QQ_1771162342326.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="3096ea04-9986-81cf-bf11-cbc34005d5c4"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">💡 你会看到团队成员并行工作：产品经理规划、设计师设计、工程师开发、测试员验证同时进行。整个过程就像真实团队协作，但效率提升数倍，只需 3-4 分钟！</div></figure></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8196-811b-d8b7f17f314a" class="">震撼点：你会拿到一个完整的、可以直接使用的网页应用，包括完整代码、美观界面、流畅动画、可靠功能。</p></div><div style="display:contents" dir="ltr"><figure id="3096ea04-9986-81a9-ac13-fc333d845246" class="image"><a href="Multi-Agent%20Team%20%E6%8C%87%E5%8D%97/QQ_1771163137300.png"><img style="width:2628px" src="Multi-Agent%20Team%20%E6%8C%87%E5%8D%97/QQ_1771163137300.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-816e-8b80-ddb247c940f8" class="">💡 <strong>更灵活的是</strong>：团队中的不同 Agent 还可以使用不同的大模型（如 Sonnet、Gemini、Haiku），让每个智能体在各自擅长的领域发挥最佳性能。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-818d-aaa0-dd29371fed09" class="">
 </p></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="3096ea04-9986-81f0-86de-c71d5df74265"><div style="font-size:1.5em"><span class="icon">💰</span></div><div style="width:100%">💰 <strong>小贴士</strong>：多智能体团队协作的效率很高，但 token 消耗也会相应增加。如果你经常使用团队功能，推荐开通 Max 订阅，畅享无限 token，专注于创造而不用担心用量。</div></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
 <style>
-#lang-toggle-btn {
+#lang-toggle-select {
   position: fixed;
   top: 16px;
   right: 16px;
@@ -761,13 +761,13 @@ blockquote.quote-large {
   background: #ffffff;
   color: #24292f;
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 6px 10px;
   font-size: 13px;
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
-#lang-toggle-btn:hover {
+#lang-toggle-select:hover {
   background: #f6f8fa;
 }
 </style>
@@ -783,16 +783,26 @@ blockquote.quote-large {
   function toEn(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
     if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
     return pathname.replace(/\.html$/i, '_en.html');
   }
 
   function toZh(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
-    return pathname.replace(/_en\.html$/i, '.html');
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
   }
 
   var rawPath = decodeURI(window.location.pathname || '');
   var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
 
   if (pref === 'en' && !isEn) {
     var enPath = toEn(rawPath);
@@ -802,7 +812,7 @@ blockquote.quote-large {
     }
   }
 
-  if (pref === 'zh' && isEn) {
+  if (pref === 'zh' && !isZh) {
     var zhPath = toZh(rawPath);
     if (zhPath !== rawPath) {
       window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
@@ -810,23 +820,45 @@ blockquote.quote-large {
     }
   }
 
-  var btn = document.createElement('button');
-  btn.id = 'lang-toggle-btn';
-  btn.type = 'button';
-  btn.textContent = isEn ? '中文' : 'EN';
-  btn.title = isEn ? '切换到中文' : 'Switch to English';
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
 
-  btn.addEventListener('click', function () {
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
     var currentPath = decodeURI(window.location.pathname || '');
-    var currentIsEn = /_en\.html$/i.test(currentPath);
-    var targetPath = currentIsEn ? toZh(currentPath) : toEn(currentPath);
-    var targetLang = currentIsEn ? 'zh' : 'en';
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
     localStorage.setItem(KEY, targetLang);
     window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
   });
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.body.appendChild(btn);
+    document.body.appendChild(select);
   });
 })();
 </script>

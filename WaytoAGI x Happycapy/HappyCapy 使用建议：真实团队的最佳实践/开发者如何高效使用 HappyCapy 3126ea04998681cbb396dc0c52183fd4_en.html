@@ -775,7 +775,7 @@ terraform show -json tfplan &gt; plan.json
 - If tests fail, analyze root cause and fix proactively
 - Finally return code that passes all tests"</code></pre></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-8141-b7a2-d91d2d7cfe78"><strong>2. Develop intuition for task classification</strong></h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-813c-9e67-fca5e55f736e"><li style="list-style-type:disc"><strong>asynchronous autonomous</strong>: Edge functionality, prototypes, unfamiliar technologies</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8160-b6b8-dc9a282fd5c3"><li style="list-style-type:disc"><strong>Synchronous supervision</strong>: Core business logic, security critical, production environment</li></ul></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-8138-a297-d6b5bcc1949d"><strong>3. Write clear and detailed prompts</strong></h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8154-bac5-d1769f3f2d50"><li style="list-style-type:disc">Give explicit file paths when repositories are similarly named</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8144-a4b3-dcd2f5b73cc0"><li style="list-style-type:disc">State your coding style preference (e.g. "program functionally, avoid classes")</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-81ff-981d-dbf44d157d5b"><li style="list-style-type:disc">Provide context (e.g. "This project uses TypeScript + React + Zustand")</li></ul></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-81da-8297-dab56af238ad"><strong>4. Use multiple instances to work in parallel</strong></h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-81a7-9b1a-f4bd8c66477c"><li style="list-style-type:disc">HappyCapy supports multiple tabs, each tab is an independent session</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-81b3-88af-f104f31c3eb7"><li style="list-style-type:disc">One tab handles the frontend, the other handles the backend</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8135-8afe-ecd0309d9b96"><li style="list-style-type:disc">Maintain full context for each session, making switching stress-free</li></ul></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-814a-a17a-c00a2a1e3c43"><strong>5. Treat refactoring tasks like a "slot machine"</strong></h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8103-affd-e6fdc95cee20"><li style="list-style-type:disc">Submit current status (<code>git commit</code>）</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8176-9034-e7a092b9f19b"><li style="list-style-type:disc">Let HappyCapy work autonomously for 30 minutes</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-81d9-945d-e3f317fe9861"><li style="list-style-type:disc">If you are satisfied with the result, accept it; if you are not satisfied, start over (<code>git reset --hard</code>）</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-81e8-b849-c3204edab4ee"><li style="list-style-type:disc">Starting over often has a higher success rate than correcting mistakes</li></ul></div><div dir="auto" style="display:contents"><p class="block-color-default" id="3126ea04-9986-81b3-bae1-c5b32a1978ee">🦫 <mark class="highlight-default"><strong>HappyCapy Official website express train:</strong></mark><mark class="highlight-default"><strong><a href="https://happycapy.ai/">https://happycapy.ai/</a></strong></mark>Here, you can see how the cute and witty HappyCapy can become your AI partner and explore infinite possibilities together! ✨</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
 <style>
-#lang-toggle-btn {
+#lang-toggle-select {
   position: fixed;
   top: 16px;
   right: 16px;
@@ -784,13 +784,13 @@ terraform show -json tfplan &gt; plan.json
   background: #ffffff;
   color: #24292f;
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 6px 10px;
   font-size: 13px;
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
-#lang-toggle-btn:hover {
+#lang-toggle-select:hover {
   background: #f6f8fa;
 }
 </style>
@@ -806,16 +806,26 @@ terraform show -json tfplan &gt; plan.json
   function toEn(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
     if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
     return pathname.replace(/\.html$/i, '_en.html');
   }
 
   function toZh(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
-    return pathname.replace(/_en\.html$/i, '.html');
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
   }
 
   var rawPath = decodeURI(window.location.pathname || '');
   var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
 
   if (pref === 'en' && !isEn) {
     var enPath = toEn(rawPath);
@@ -825,7 +835,7 @@ terraform show -json tfplan &gt; plan.json
     }
   }
 
-  if (pref === 'zh' && isEn) {
+  if (pref === 'zh' && !isZh) {
     var zhPath = toZh(rawPath);
     if (zhPath !== rawPath) {
       window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
@@ -833,23 +843,45 @@ terraform show -json tfplan &gt; plan.json
     }
   }
 
-  var btn = document.createElement('button');
-  btn.id = 'lang-toggle-btn';
-  btn.type = 'button';
-  btn.textContent = isEn ? '中文' : 'EN';
-  btn.title = isEn ? '切换到中文' : 'Switch to English';
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
 
-  btn.addEventListener('click', function () {
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
     var currentPath = decodeURI(window.location.pathname || '');
-    var currentIsEn = /_en\.html$/i.test(currentPath);
-    var targetPath = currentIsEn ? toZh(currentPath) : toEn(currentPath);
-    var targetLang = currentIsEn ? 'zh' : 'en';
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
     localStorage.setItem(KEY, targetLang);
     window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
   });
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.body.appendChild(btn);
+    document.body.appendChild(select);
   });
 })();
 </script>

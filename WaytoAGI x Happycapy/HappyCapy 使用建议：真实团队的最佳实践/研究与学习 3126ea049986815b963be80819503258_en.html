@@ -747,7 +747,7 @@ Please:
 4. Find unresolved research questions
 5. Generate a structured literature review report (with citations)"</code></pre></div><div dir="auto" style="display:contents"><h3 class="block-color-default" id="3126ea04-9986-81d5-8121-e47d50e063ac">HappyCapy will:</h3></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-819d-b271-e0cc695293ab"><li style="list-style-type:disc">Search papers using the web-search skill</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-8180-97de-ebb84f07c2ed"><li style="list-style-type:disc">Use the read-arxiv-paper skill to read papers</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-8175-add0-e76deffa1295"><li style="list-style-type:disc">Summarize key findings</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-8103-971c-d1a1a19b323d"><li style="list-style-type:disc">Generate review report with citations</li></ul></div><div dir="auto" style="display:contents"><hr id="3126ea04-9986-81e2-8e1d-c8c42340be05"/></div><div dir="auto" style="display:contents"><h2 class="block-color-default" id="3126ea04-9986-8116-8b6e-f42a6b0352e5">💡 Advice for researchers and learners</h2></div><div dir="auto" style="display:contents"><h3 class="block-color-default" id="3126ea04-9986-8139-a1ec-c85ba69cbcbf">1. Test the knowledge base function first</h3></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-8107-8e20-e0c825c5d622"><li style="list-style-type:disc">Ask questions and see if HappyCapy comes up with answers faster than Google</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-8131-ab84-ed5bf3fc2266"><li style="list-style-type:disc">If so, make it your primary study tool</li></ul></div><div dir="auto" style="display:contents"><h3 class="block-color-default" id="3126ea04-9986-81f1-811e-cc0f0225ccc7">2. Start with code generation</h3></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-81a5-a09c-c824addaabe8"><li style="list-style-type:disc">Let HappyCapy write code examples</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-81f4-a41f-def63a038917"><li style="list-style-type:disc">Read the code and understand the logic</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-8125-8b40-df83be7144b2"><li style="list-style-type:disc">Modify the code and try changes</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-8107-ab10-e642eea6f106"><li style="list-style-type:disc">Learn faster by doing</li></ul></div><div dir="auto" style="display:contents"><h3 class="block-color-default" id="3126ea04-9986-8114-be50-cc759c9e9158">3. Iterative learning</h3></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-8105-8276-c453e9391bfb"><li style="list-style-type:disc">Don’t ask “teach me all about machine learning” all at once</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="3126ea04-9986-81a4-acd5-ea670acdae6a"><li style="list-style-type:disc">Instead: "Teach me linear regression first" → "Teach me logistic regression now" → Go deeper step by step</li></ul></div><div dir="auto" style="display:contents"><hr id="3126ea04-9986-8114-8041-c057f43e13f7"/></div><div dir="auto" style="display:contents"><hr id="3126ea04-9986-8117-b0e2-d2499ce7229e"/></div><div dir="auto" style="display:contents"><p class="block-color-default" id="3126ea04-9986-8164-9b85-d4531a272abc">🦫 <mark class="highlight-default"><strong>HappyCapy Official website express train:</strong></mark><mark class="highlight-default"><strong><a href="https://happycapy.ai/">https://happycapy.ai/</a></strong></mark>Here, you can see how the cute and witty HappyCapy can become your AI partner and explore infinite possibilities together! ✨</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
 <style>
-#lang-toggle-btn {
+#lang-toggle-select {
   position: fixed;
   top: 16px;
   right: 16px;
@@ -756,13 +756,13 @@ Please:
   background: #ffffff;
   color: #24292f;
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 6px 10px;
   font-size: 13px;
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
-#lang-toggle-btn:hover {
+#lang-toggle-select:hover {
   background: #f6f8fa;
 }
 </style>
@@ -778,16 +778,26 @@ Please:
   function toEn(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
     if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
     return pathname.replace(/\.html$/i, '_en.html');
   }
 
   function toZh(pathname) {
     if (!/\.html$/i.test(pathname)) return pathname;
-    return pathname.replace(/_en\.html$/i, '.html');
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
   }
 
   var rawPath = decodeURI(window.location.pathname || '');
   var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
 
   if (pref === 'en' && !isEn) {
     var enPath = toEn(rawPath);
@@ -797,7 +807,7 @@ Please:
     }
   }
 
-  if (pref === 'zh' && isEn) {
+  if (pref === 'zh' && !isZh) {
     var zhPath = toZh(rawPath);
     if (zhPath !== rawPath) {
       window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
@@ -805,23 +815,45 @@ Please:
     }
   }
 
-  var btn = document.createElement('button');
-  btn.id = 'lang-toggle-btn';
-  btn.type = 'button';
-  btn.textContent = isEn ? '中文' : 'EN';
-  btn.title = isEn ? '切换到中文' : 'Switch to English';
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
 
-  btn.addEventListener('click', function () {
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
     var currentPath = decodeURI(window.location.pathname || '');
-    var currentIsEn = /_en\.html$/i.test(currentPath);
-    var targetPath = currentIsEn ? toZh(currentPath) : toEn(currentPath);
-    var targetLang = currentIsEn ? 'zh' : 'en';
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
     localStorage.setItem(KEY, targetLang);
     window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
   });
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.body.appendChild(btn);
+    document.body.appendChild(select);
   });
 })();
 </script>
