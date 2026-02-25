@@ -1,0 +1,805 @@
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>MCP User Guide (Multi-session memory management, global integration with other platforms)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article class="page sans" id="30f6ea04-9986-8072-a5a4-d10ecfdeb723"><header><div class="page-header-icon undefined"><span class="icon">🔌</span></div><h1 class="page-title" dir="auto">MCP User Guide (Multi-session memory management, global integration with other platforms)</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-8069-9dfc-f02fb060bead"><strong>HappyCapy Official website express train:</strong><a href="https://happycapy.ai/">https://happycapy.ai/</a>Here, you can see how the cute and witty HappyCapy can become your AI partner and explore infinite possibilities together!</p></div><div dir="auto" style="display:contents"><h2 class="block-color-default" id="30f6ea04-9986-8085-aef4-c4cbb2d319b8"><mark class="highlight-default"><strong>What is MCP?</strong></mark></h2></div><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-80a3-9140-dffd8460d0d7">MCP (Model Context Protocol) is an open protocol standard that enables AI assistants to securely connect to a variety of external tools, data sources, and services.</p></div><div dir="ltr" style="display:contents"><figure class="image" id="30f6ea04-9986-8092-b7d5-e6a2bef170ee"><a href="MCP%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97%EF%BC%88%E5%A4%9A%E4%BC%9A%E8%AF%9D%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%8C%E5%85%B6%E4%BB%96%E5%B9%B3%E5%8F%B0%E5%85%A8%E5%B1%80%E9%9B%86%E6%88%90%EF%BC%89/image.png"><img src="MCP%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97%EF%BC%88%E5%A4%9A%E4%BC%9A%E8%AF%9D%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%8C%E5%85%B6%E4%BB%96%E5%B9%B3%E5%8F%B0%E5%85%A8%E5%B1%80%E9%9B%86%E6%88%90%EF%BC%89/image.png" style="width:691.9866333007812px"/></a></figure></div><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-80e3-baad-ca5cb334822b">To put it simply, MCP is like installing a "plug-in system" for AI, allowing it to:</p></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-805b-8511-c2a96d178cb8"><li style="list-style-type:disc">📧 Read and write your Gmail messages</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-808a-bca8-fda3868c405c"><li style="list-style-type:disc">💬 Send a message on Slack</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-806b-b496-d0ee044d843b"><li style="list-style-type:disc">📝 Visit and edit Notion page</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-8016-a52b-e7111e9be624"><li style="list-style-type:disc">🐙 Manage GitHub repository and Issues</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-805a-bbbe-e740c4f3b539"><li style="list-style-type:disc">🧠 Persistent memory of knowledge graph between conversations</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-80f4-b1df-eec2c29a93e1"><li style="list-style-type:disc">🔗 Connect to 1000+ other apps and services</li></ul></div><div dir="auto" style="display:contents"><hr id="30f6ea04-9986-80e2-b880-c056f08784cc"/></div><div dir="auto" style="display:contents"><h2 class="block-color-default" id="30f6ea04-9986-8081-a4e5-e8855d973d4d"><mark class="highlight-default"><strong>Why is MCP needed?</strong></mark></h2></div><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-80f9-9057-d8c1eee173fc">After installing MCP in HappyCapy you can:</p></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-803e-b69c-e8473478f123"><li style="list-style-type:disc"><mark class="highlight-default"><strong>Automate routine tasks</strong></mark>- Let AI help you handle emails, schedule, and organize documents</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-808c-a764-e95d98c164cf"><li style="list-style-type:disc"><mark class="highlight-default"><strong>Cross-platform collaboration</strong></mark>- Complete multiple application operations in one conversation (such as reading attachments from Gmail, processing and uploading to Notion)</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-80af-93c5-f72d6b5a3a44"><li style="list-style-type:disc"><mark class="highlight-default"><strong>persistence context</strong></mark>- Through Memory MCP, AI can remember important content such as project information and character relationships, and maintain memory across sessions.</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-8043-abba-cac92e3a671c"><li style="list-style-type:disc"><mark class="highlight-default"><strong>Simplify development process</strong></mark>- Manage the GitHub repository, create Issues, and view code directly in the conversation</li></ul></div><div dir="auto" style="display:contents"><hr id="30f6ea04-9986-8094-b4ef-dcd80efb82c1"/></div><div dir="auto" style="display:contents"><h2 class="" id="30f6ea04-9986-8022-82b7-fb5ef3e759e9"><mark class="highlight-default"><strong>🚀 Quick installation: use our automation skills</strong></mark></h2></div><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-80e7-98b6-d97873184f8f"><mark class="highlight-default"><strong>We have developed a one-click installation skill for HappyCapy, which can automatically help you configure Memory MCP, Composio MCP and GitHub Copilot MCP.</strong></mark></p></div><div dir="auto" style="display:contents"><h3 class="block-color-default" id="30f6ea04-9986-8059-a97d-e1a81bfc317c">Step 1: Install skills</h3></div><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-8089-9f9a-f5d157119792">In the HappyCapy dialog enter:</p></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="30f6ea04-9986-8040-ad7d-dea2dc23c3ff"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Install the skill: https://github.com/Y1fe1-Yang/happycapy-mcp-manager</code></pre></div><div dir="auto" style="display:contents"><h3 class="block-color-default" id="30f6ea04-9986-8065-ac51-f0848eaa83c4">Step 2: Run the skill</h3></div><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-80d2-bba8-d8aeda3f2723">After the installation is complete, enter:</p></div><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-800c-864d-edfd14450df8"><mark class="highlight-default"><code>/happycapy-mcp-manager</code></mark></p></div><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-8052-af94-f71158638aad">Or just say:</p></div><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-808b-b1d1-e5361ff7a709"><mark class="highlight-default"><code>帮我安装 Memory MCP</code></mark></p></div><div dir="ltr" style="display:contents"><figure class="block-color-yellow_background callout" id="30f6ea04-9986-809e-8ea0-ead48e73b2bf" style="white-space:pre-wrap;display:flex"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">💡 The skill will guide you through all configuration steps, including collecting necessary API Keys, updating configuration files, restarting sessions, etc. For Memory MCP, no credentials are required, just one click to install!</div></figure></div><div dir="auto" style="display:contents"><hr id="30f6ea04-9986-80b7-8b87-eeb3aed0fc7f"/></div><div dir="auto" style="display:contents"><h2 class="block-color-default" id="30f6ea04-9986-80c6-9875-e3feb421897f"><mark class="highlight-default"><strong>🧠 Highly recommended: Memory MCP</strong></mark></h2></div><div dir="auto" style="display:contents"><p class="block-color-default" id="30f6ea04-9986-8094-bcd2-c0b8b922fefd"><mark class="highlight-default"><strong>Memory MCP is an official knowledge graph storage MCP, which can provide persistent memory capabilities for AI. this is us</strong></mark><mark class="highlight-default"><strong><span style="border-bottom:0.05em solid">Most recommended</span></strong></mark><mark class="highlight-default"><strong>The MCP!</strong></mark></p></div><div dir="auto" style="display:contents"><h3 class="block-color-default" id="30f6ea04-9986-80c8-be4a-c0bf4d92bca8">Why do you need Memory MCP?</h3></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-8000-8e4c-d90cc542ee2f"><li style="list-style-type:disc"><mark class="highlight-default"><strong>Cross-session memory</strong></mark>- AI can remember your project information, code structure, character relationships, etc., so there is no need to repeat the introduction during the next conversation</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-808b-8e1b-eebb53c96ea6"><li style="list-style-type:disc"><mark class="highlight-default"><strong>Knowledge graph</strong></mark>- Store information in the form of entities and relationships, making it more structured and searchable</li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-8070-83ac-df65d59f7830"><li style="list-style-type:disc"><mark class="highlight-default"><strong>long term context</strong></mark>- For long-term projects, AI can continue to accumulate understanding of the project</li></ul></div><div dir="auto" style="display:contents"><h3 class="" id="126a33c7-11a8-410f-8880-40a46a36ee95">💡 Memory MCP usage example</h3></div><div dir="auto" style="display:contents"><p class="" id="a0bf29db-a6f1-4e81-8f9d-5548de75e9a8">After installing Memory MCP, you can use the following prompt to integrate historical conversation information into the knowledge graph. Choose the appropriate version based on your needs:</p></div><div dir="auto" style="display:contents"><h3 class="" id="953f0d9a-5204-40ed-89de-2ce8dbafe8b6">1️⃣ Full version (suitable for first time use)</h3></div><div dir="auto" style="display:contents"><p class="" id="e556696f-2de6-404d-8797-d60e190787eb">Scan all historical sessions in detail and extract information such as projects, technology stacks, and capability portraits, which is suitable for building a complete knowledge graph.</p></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="c7bc6513-f10b-414c-9739-4753733279f7"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Integrate all my historical conversation data across the system into the Memory MCP knowledge graph.
+
+Detailed requirements:
+1. Scan all historical session workspaces on this machine
+2. Analyze each workspace's project content, tech stack, and creation time
+3. Extract key information and structure it into background knowledge
+4. Store the following in the knowledge graph:
+   - All projects I have completed
+   - Technologies and tools I have used
+   - Relationships between projects and technologies
+   - My technical capability profile and preferences
+   - Timeline and activity cycles
+5. Finally generate a complete summary report</code></pre></div><div dir="auto" style="display:contents"><h3 class="" id="1f3a7a8d-e9b6-49f4-8405-a203c9cbfb56">2️⃣ Simplified version (recommended)</h3></div><div dir="auto" style="display:contents"><p class="" id="5fe67cbf-3902-4620-b695-a090b58bd63f">Quickly extract the core information of historical conversations, suitable for daily use by most users.</p></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="6400130d-ac07-42f7-b629-5ac9ef36dd70"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Extract conversation data from all historical sessions on this machine into background knowledge, and integrate it into the Memory MCP knowledge graph.</code></pre></div><div dir="auto" style="display:contents"><h3 class="" id="f39268ec-6938-49a9-8cd8-c5d2ba842afa">3️⃣ Quick version (the simplest)</h3></div><div dir="auto" style="display:contents"><p class="" id="91526d7c-b5cf-423d-bb98-5330108a2595">The simplest and most direct expression, suitable for quick use.</p></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="7dc96f2d-0ac3-42fe-aec5-2dda5956bbb3"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Extract all previous session conversations into memory and store them in the knowledge graph</code></pre></div><div dir="auto" style="display:contents"><p class="" id="51679162-37a5-47e2-a608-2b9edef6cbbb">💡 <strong>hint</strong>: Copy the Prompt in any of the above code blocks and paste it directly into the dialog box to start using it. Happycapy will automatically scan historical sessions and integrate the information into the Memory MCP knowledge graph.</p></div><div dir="ltr" style="display:contents"><figure class="image" id="30f6ea04-9986-8033-9b44-c245e89aca69"><a href="MCP%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97%EF%BC%88%E5%A4%9A%E4%BC%9A%E8%AF%9D%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%8C%E5%85%B6%E4%BB%96%E5%B9%B3%E5%8F%B0%E5%85%A8%E5%B1%80%E9%9B%86%E6%88%90%EF%BC%89/QQ_1771754360362.png"><img src="MCP%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97%EF%BC%88%E5%A4%9A%E4%BC%9A%E8%AF%9D%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%8C%E5%85%B6%E4%BB%96%E5%B9%B3%E5%8F%B0%E5%85%A8%E5%B1%80%E9%9B%86%E6%88%90%EF%BC%89/QQ_1771754360362.png" style="width:2562px"/></a></figure></div><div dir="auto" style="display:contents"><p class="" id="30f6ea04-9986-8041-872e-fc88a8e9aa39">💡 <strong>hint</strong>: The conversation after installing Memory will be automatically saved. There is no need to repeat this command. The service is completed by itself within the sandbox. Happycapy will not use any of your information.</p></div><div dir="auto" style="display:contents"><hr id="30f6ea04-9986-80e2-b73f-c6f6692d3b9a"/></div><div dir="auto" style="display:contents"><h2 class="block-color-default" id="30f6ea04-9986-8077-b98a-c4bfecbc608c"><mark class="highlight-default"><strong>🔗 Related resources</strong></mark></h2></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-8008-9ce7-c25ae1a34972"><li style="list-style-type:disc"><mark class="highlight-default"><strong>GitHub Warehouse:</strong></mark><a href="https://github.com/Y1fe1-Yang/happycapy-mcp-manager">https://github.com/Y1fe1-Yang/happycapy-mcp-manager</a></li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-800e-b8b3-f953b82dc762"><li style="list-style-type:disc"><mark class="highlight-default"><strong>Memory MCP official documentation:</strong></mark><a href="https://github.com/modelcontextprotocol/servers/tree/main/src/memory">https://github.com/modelcontextprotocol/servers/tree/main/src/memory</a></li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-80be-bc73-e6f63563bb91"><li style="list-style-type:disc"><mark class="highlight-default"><strong>Composio platform:</strong></mark><a href="https://app.composio.dev">https://app.composio.dev</a></li></ul></div><div dir="auto" style="display:contents"><ul class="block-color-default bulleted-list" id="30f6ea04-9986-80b9-be6f-e764c677c9dd"><li style="list-style-type:disc"><mark class="highlight-default"><strong>MCP Agreement official website:</strong></mark><a href="https://modelcontextprotocol.io">https://modelcontextprotocol.io</a></li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
+<style>
+#lang-toggle-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
+  color: #24292f;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+#lang-toggle-btn:hover {
+  background: #f6f8fa;
+}
+</style>
+<script>
+(function () {
+  var KEY = 'site_lang_pref';
+  var pref = localStorage.getItem(KEY);
+  if (!pref) {
+    pref = 'en';
+    localStorage.setItem(KEY, pref);
+  }
+
+  function toEn(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname;
+    return pathname.replace(/\.html$/i, '_en.html');
+  }
+
+  function toZh(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    return pathname.replace(/_en\.html$/i, '.html');
+  }
+
+  var rawPath = decodeURI(window.location.pathname || '');
+  var isEn = /_en\.html$/i.test(rawPath);
+
+  if (pref === 'en' && !isEn) {
+    var enPath = toEn(rawPath);
+    if (enPath !== rawPath) {
+      window.location.replace(encodeURI(enPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh' && isEn) {
+    var zhPath = toZh(rawPath);
+    if (zhPath !== rawPath) {
+      window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  var btn = document.createElement('button');
+  btn.id = 'lang-toggle-btn';
+  btn.type = 'button';
+  btn.textContent = isEn ? '中文' : 'EN';
+  btn.title = isEn ? '切换到中文' : 'Switch to English';
+
+  btn.addEventListener('click', function () {
+    var currentPath = decodeURI(window.location.pathname || '');
+    var currentIsEn = /_en\.html$/i.test(currentPath);
+    var targetPath = currentIsEn ? toZh(currentPath) : toEn(currentPath);
+    var targetLang = currentIsEn ? 'zh' : 'en';
+    localStorage.setItem(KEY, targetLang);
+    window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.appendChild(btn);
+  });
+})();
+</script>
+<!-- LANG_TOGGLE_END --></body></html>
