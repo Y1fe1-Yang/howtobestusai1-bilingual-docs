@@ -178,9 +178,21 @@ def build_snippet(current_file: Path, title: str, home_file: Path, parent_file: 
 
     return f'''{MARK_START}
 <style>
+article.page > header {{
+    white-space: normal;
+}}
 .hc-breadcrumb {{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
   font-size: 14px;
-  margin-bottom: 0.75em;
+    line-height: 1.35;
+    white-space: normal;
+    margin: 0.2em 0 0.35em;
+}}
+.hc-breadcrumb a,
+.hc-breadcrumb span {{
+    white-space: normal;
 }}
 .hc-breadcrumb-sep {{
   margin: 0 0.35em;
