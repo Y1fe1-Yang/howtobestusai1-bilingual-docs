@@ -7,8 +7,8 @@ from deep_translator import GoogleTranslator
 from translate_html_to_en import translate_html_file
 
 paths = [
-    Path(r"d:\howtobestusai1\WaytoAGI x Happycapy\Skills 指南 3096ea0499868071be29cad4ee14f954.html"),
-    Path(r"d:\howtobestusai1\WaytoAGI x Happycapy\与其他平台的集成 3096ea04998680d3b4d2f992b732da62.html"),
+    Path(r"d:\howtobestusai1\HappyCapy\Skills 指南 3096ea0499868071be29cad4ee14f954.html"),
+    Path(r"d:\howtobestusai1\HappyCapy\与其他平台的集成 3096ea04998680d3b4d2f992b732da62.html"),
 ]
 
 os.environ["HTTP_PROXY"] = ""

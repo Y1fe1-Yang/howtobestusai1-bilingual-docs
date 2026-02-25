@@ -1,0 +1,849 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>非技术人员如何使用 HappyCapy</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3126ea04-9986-81d1-a08d-e5b1761523b8" class="page sans"><header><img class="page-cover-image" src="%E9%9D%9E%E6%8A%80%E6%9C%AF%E4%BA%BA%E5%91%98%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20HappyCapy/v3-01-non-technical.png" style="object-position:center 41.11%"/><!-- BREADCRUMB_START -->
+<style>
+.hc-breadcrumb {
+  font-size: 14px;
+  margin-bottom: 0.75em;
+}
+.hc-breadcrumb-sep {
+  margin: 0 0.35em;
+  opacity: 0.6;
+}
+</style>
+<nav class="hc-breadcrumb" aria-label="Breadcrumb">
+  <a href="../../HappyCapy%203096ea04998680d3ba0ef82161f9c1ce.html">首页</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <a href="../HappyCapy%20%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE%EF%BC%9A%E7%9C%9F%E5%AE%9E%E5%9B%A2%E9%98%9F%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%203126ea04998680ddb840dfae4e413585.html">HappyCapy 使用建议：真实团队的最佳实践</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <span aria-current="page">非技术人员如何使用 HappyCapy</span>
+</nav>
+<!-- BREADCRUMB_END -->
+
+
+
+<h1 class="page-title" dir="auto">非技术人员如何使用 HappyCapy</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-81da-a40b-e28c336f43cf" class="">适用人群</h2></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-816f-a10a-c32958fed765" class="">财务、法务、营销、运营、产品经理等无编程背景的专业人士</p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8160-af86-edf95d036121"/></div><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-8114-be40-c218be77d693" class="">核心场景</h2></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81ab-8452-e44fb61417d4" class="">📊 场景一：自动化数据工作流</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8162-9de7-ff078afc2c9b" class=""><mark class="highlight-default"><strong>真实案例： 财务团队用纯文本描述工作流,让 AI 自动执行复杂的数据处理任务。</strong></mark></p></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81a4-b7ff-d4f79e400146" class="">在 HappyCapy 中如何做：</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81b1-b39c-c8db802d3f8c" class=""><mark class="highlight-default"><strong>1. 用自然语言描述你的工作流</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81a6-89e0-ef4f943f7d5b" class="">&quot;每月月初，请帮我：<br/>1. 从 Excel 表格中读取上月销售数据<br/>2. 计算每个地区的增长率<br/>3. 生成对比图表<br/>4. 创建一份包含关键指标的报告&quot;</p></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8150-8b86-ff16f7444303" class=""><mark class="highlight-default"><strong>2. HappyCapy 会主动询问需要的输入</strong></mark></p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81ac-984a-c906d4282430" class="bulleted-list"><li style="list-style-type:disc">&quot;请提供 Excel 文件&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8120-b69c-d696f0612e92" class="bulleted-list"><li style="list-style-type:disc">&quot;需要对比哪个月份的数据？&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81c3-842b-c567924c4550" class=""><mark class="highlight-default"><strong>3. 保存为自动化流程（Pro/Max 计划）</strong></mark></p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8133-91c6-cf62bc99b239" class="bulleted-list"><li style="list-style-type:disc">设置定时任务，每月自动执行</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-816f-8c89-c729bf31dd44" class="bulleted-list"><li style="list-style-type:disc">无需每次重新描述</li></ul></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81e5-8846-dc9fb1d26b7f" class="">关键优势</h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8170-9ad9-dc73096ccd2a" class="bulleted-list"><li style="list-style-type:disc">✅ 无需学习 Excel 公式或编程</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-816f-89d9-e2d1d9cdbdba" class="bulleted-list"><li style="list-style-type:disc">✅ 描述一次，反复使用</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-818a-b6cc-dea7d496a8ba" class="bulleted-list"><li style="list-style-type:disc">✅ 减少人为错误</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8119-8d1c-c8189ab4afbb"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81c6-8d0d-db9556bafedf" class="">🎨 场景二：快速生成营销素材</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-817c-a640-c4bf1382734a" class=""><mark class="highlight-default"><strong>真实案例： 增长营销团队用 HappyCapy 在 15 分钟内生成数百个广告文案变体。</strong></mark></p></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-812b-9390-c73f41f79cfb" class="">在 HappyCapy 中如何做：</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8143-9e96-c9843f77914a" class="">&quot;帮我创建 20 个 Google Ads 广告变体：<br/>- 产品：AI 协作工具 HappyCapy<br/>- 目标受众：中小企业主<br/>- 卖点：零技术门槛、提升工作效率、云端运行<br/>- 标题限制：30 字符以内<br/>- 描述限制：90 字符以内&quot;</p></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81a9-b675-fabe81c2d135" class="">HappyCapy 会：</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-815c-82c9-f8cdaa28c51d" class="numbered-list" start="1"><li>生成多个创意方向</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-8100-a2a9-f26483d2f49d" class="numbered-list" start="2"><li>自动检查字符限制</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-815b-8664-faf674906ec3" class="numbered-list" start="3"><li>输出为 CSV，可直接导入广告平台</li></ol></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8123-be5e-fb9926d59589" class=""><mark class="highlight-default"><strong>时间节省： 从 2 小时 → 15 分钟</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8164-b66c-cd6ad22acf09"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-814c-8733-eba3404478c3" class="">📄 场景三：文档处理与格式转换</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-816f-80fb-c91a4612424b" class=""><mark class="highlight-default"><strong>真实案例： 法律团队快速处理合同、创建自定义工具。</strong></mark></p></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81bc-8c01-d9f8de665e4c" class="">在 HappyCapy 中如何做：</h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8109-b13d-c9f445108367" class="bulleted-list"><li style="list-style-type:disc">&quot;帮我把这份 PDF 合同转成 Word，并提取所有关键条款&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8156-b7ab-f2cc7abfec5f" class="bulleted-list"><li style="list-style-type:disc">&quot;将这 10 份客户反馈整理成一张对比表格&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8122-9d9e-f0e247161bb0" class="bulleted-list"><li style="list-style-type:disc">&quot;把我的会议录音转成文字，并生成行动项清单&quot;</li></ul></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81b0-85cd-d389d6af2745" class="">适用场景：</h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-819a-a0e9-f838c50de61e" class="bulleted-list"><li style="list-style-type:disc">合同审查</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8103-a513-d12ee1a8fe75" class="bulleted-list"><li style="list-style-type:disc">客户沟通记录整理</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-810f-ae94-d1b2baebf2d1" class="bulleted-list"><li style="list-style-type:disc">会议纪要生成</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81a0-ba79-c5c0ce026cda" class="bulleted-list"><li style="list-style-type:disc">多格式文档转换</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-817e-84ae-c2ecd9a61f4b"/></div><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-8110-82b0-e0b36869d2fe" class="">💡 给非技术人员的建议</h2></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8193-8f34-f648fdde9948" class="">1. 从简单任务开始建立信心</h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81dc-b23a-ec2f2f40bc14" class="bulleted-list"><li style="list-style-type:disc">先尝试：&quot;帮我生成一张海报&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81ff-a846-cb1c00a4f887" class="bulleted-list"><li style="list-style-type:disc">然后尝试：&quot;分析这份数据并做图表&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81f2-aafc-f5bec33650a6" class="bulleted-list"><li style="list-style-type:disc">最后尝试：复杂的多步骤工作流</li></ul></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81a7-8642-d624a7a47b53" class="">2. 像和助手聊天一样描述需求</h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8165-b694-ff5816f8e2d0" class="bulleted-list"><li style="list-style-type:disc">❌ 不要想&quot;我该用什么工具&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8144-abab-dfb125f786ad" class="bulleted-list"><li style="list-style-type:disc">✅ 直接说&quot;我想要什么结果&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81d1-8825-df2a09383626" class="bulleted-list"><li style="list-style-type:disc">HappyCapy 会自动选择合适的工具和模型</li></ul></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8169-ac60-d24645a34c2d" class="">3. 保存成功的工作流</h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8150-87df-e57382a97a67" class="bulleted-list"><li style="list-style-type:disc">把有效的提示词记录下来</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81f4-aff9-f26d755295aa" class="bulleted-list"><li style="list-style-type:disc">重复任务可以直接复制上次的描述</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81b5-ac73-f2658603d899" class="bulleted-list"><li style="list-style-type:disc">Pro/Max 用户可以设置自动化</li></ul></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8163-b205-f5e8d3ef7952" class="">4. 不要害怕&quot;愚蠢&quot;的问题</h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81e1-b344-fcffb42686d6" class="bulleted-list"><li style="list-style-type:disc">HappyCapy 不会评判你</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-811d-a344-c6e1020cf455" class="bulleted-list"><li style="list-style-type:disc">试错是学习的一部分</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8118-bed6-dcee906873b9" class="bulleted-list"><li style="list-style-type:disc">每次对话都是独立的，可以随时重新开始</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8148-9ec4-e8f0a4891e61"/></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81e1-8fc1-f7a28d03fd52" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8175-8513-db7be024246d"/></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81bd-a5a8-d902c3d4dd10" class="block-color-default">🦫 <mark class="highlight-default"><strong>HappyCapy 官网直通车：</strong></mark><mark class="highlight-default"><strong><a href="https://happycapy.ai/">https://happycapy.ai/</a></strong></mark> 在这里，你可以看到机智可爱的 HappyCapy 如何成为你的 AI 伙伴，一起探索无限可能！✨</p></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81a8-99e9-e8feb91b1cb9" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
+<style>
+#lang-toggle-select {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
+  color: #24292f;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+#lang-toggle-select:hover {
+  background: #f6f8fa;
+}
+</style>
+<script>
+(function () {
+  var KEY = 'site_lang_pref';
+  var pref = localStorage.getItem(KEY);
+  if (!pref) {
+    pref = 'en';
+    localStorage.setItem(KEY, pref);
+  }
+
+  function toEn(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
+    return pathname.replace(/\.html$/i, '_en.html');
+  }
+
+  function toZh(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
+  }
+
+  var rawPath = decodeURI(window.location.pathname || '');
+  var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
+
+  if (pref === 'en' && !isEn) {
+    var enPath = toEn(rawPath);
+    if (enPath !== rawPath) {
+      window.location.replace(encodeURI(enPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh' && !isZh) {
+    var zhPath = toZh(rawPath);
+    if (zhPath !== rawPath) {
+      window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
+    var currentPath = decodeURI(window.location.pathname || '');
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
+    localStorage.setItem(KEY, targetLang);
+    window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.appendChild(select);
+  });
+})();
+</script>
+<!-- LANG_TOGGLE_END --></body></html>

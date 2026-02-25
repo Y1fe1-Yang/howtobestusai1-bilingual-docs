@@ -1,5 +1,5 @@
 {
-  "d:/howtobestusai1/WaytoAGI x Happycapy/快速上手 3096ea0499868002bcddc67c919bd1d4_en.html": [
+  "d:/howtobestusai1/HappyCapy/快速上手 3096ea0499868002bcddc67c919bd1d4_en.html": [
     {
       "index": 1,
       "text": "画一只可爱的卡皮巴拉，漫画风格"
@@ -17,7 +17,7 @@
       "text": "帮我整理这份 Excel：\n1. 删除重复数据\n2. 按日期排序\n3. 生成一份干净的新表格"
     }
   ],
-  "d:/howtobestusai1/WaytoAGI x Happycapy/与其他平台的集成/GitHub 集成 3096ea04998681d095fece36eafa5146_en.html": [
+  "d:/howtobestusai1/HappyCapy/与其他平台的集成/GitHub 集成 3096ea04998681d095fece36eafa5146_en.html": [
     {
       "index": 1,
       "text": "帮我创建一个 GitHub 仓库，名字叫 my-project\n\n我的 GitHub 账号：https://github.com/你的用户名\nToken：ghp_你的token"
@@ -47,7 +47,7 @@
       "text": "\"帮我看看 my-project 的 Issue\"\n\n而不是：\n\"帮我看看 https://github.com/username/my-project 的 Issue\""
     }
   ],
-  "d:/howtobestusai1/WaytoAGI x Happycapy/与其他平台的集成/Notion 集成 3096ea04998681c09d2efbf805bac461_en.html": [
+  "d:/howtobestusai1/HappyCapy/与其他平台的集成/Notion 集成 3096ea04998681c09d2efbf805bac461_en.html": [
     {
       "index": 2,
       "text": "读取我的 Notion 页面\n\nToken: ntn_你的token\n页面链接: https://www.notion.so/你的页面链接"
@@ -57,7 +57,7 @@
       "text": "帮我更新 Notion 页面的内容\n\nToken: ntn_你的token\n页面 ID: 3065ab5584b5803e8572fcb253106e5a\n新内容: [你想添加的内容]"
     }
   ],
-  "d:/howtobestusai1/WaytoAGI x Happycapy/Skills 指南 3096ea0499868071be29cad4ee14f954_en.html": [
+  "d:/howtobestusai1/HappyCapy/Skills 指南 3096ea0499868071be29cad4ee14f954_en.html": [
     {
       "index": 1,
       "text": "生成一张卡皮巴拉的插画\n\n→ HappyCapy 自动调用图片生成 Skill"
@@ -71,7 +71,7 @@
       "text": "帮我创建一个 Skill：\n\n名称：求职简历优化器\n\n功能：\n输入：我的简历 + 目标岗位 JD\n\n处理：\n1. 分析 JD 的关键词和要求\n2. 对比简历，找出匹配点和不足\n3. 优化措辞（更符合岗位）\n4. 量化成果（用数据说话）\n5. 调整排版（突出重点）\n6. 生成 3 个版本：保守版/平衡版/激进版\n\n输出：\n- 3 个优化后的简历\n- 每个版本的使用建议\n- 面试准备要点\n\n并帮我测试一下！"
     }
   ],
-  "d:/howtobestusai1/WaytoAGI x Happycapy/Multi-Agent Team 指南 3096ea04998680248c82fbf994d3b1a2_en.html": [
+  "d:/howtobestusai1/HappyCapy/Multi-Agent Team 指南 3096ea04998680248c82fbf994d3b1a2_en.html": [
     {
       "index": 1,
       "text": "我需要开发一个完整的网站，包括前端、后端和数据库设计。\n请组建一个团队来完成这个项目。"
@@ -81,7 +81,7 @@
       "text": "请组建一个开发团队，帮我完成「番茄钟」应用：\n\n产品需求：\n- 25 分钟工作计时（可暂停/重置）\n- 5 分钟休息提醒（声音 + 视觉提示）\n- 统计今日完成的番茄钟次数\n- 简洁美观的界面设计（渐变色、现代风格）\n- 响应式布局（支持手机和电脑）\n- 本地存储（刷新不丢失数据）\n\n团队分工建议：\n1. 产品经理：梳理功能逻辑和用户流程\n2. UI 设计师：设计界面和交互方案\n3. 前端工程师：实现功能（HTML/CSS/JavaScript）\n4. 测试工程师：验证功能完整性\n\n请团队协作完成，并给我一个可直接使用的网页应用！"
     }
   ],
-  "d:/howtobestusai1/WaytoAGI x Happycapy/MCP使用指南（多会话记忆管理，其他平台全局集成） 30f6ea0499868072a5a4d10ecfdeb723_en.html": [
+  "d:/howtobestusai1/HappyCapy/MCP使用指南（多会话记忆管理，其他平台全局集成） 30f6ea0499868072a5a4d10ecfdeb723_en.html": [
     {
       "index": 1,
       "text": "安装https://github.com/Y1fe1-Yang/happycapy-mcp-manager技能"
@@ -99,7 +99,7 @@
       "text": "把之前所有 session 的对话提炼成记忆存到知识图谱"
     }
   ],
-  "d:/howtobestusai1/WaytoAGI x Happycapy/HappyCapy 使用建议：真实团队的最佳实践/开发者如何高效使用 HappyCapy 3126ea04998681cbb396dc0c52183fd4_en.html": [
+  "d:/howtobestusai1/HappyCapy/HappyCapy 使用建议：真实团队的最佳实践/开发者如何高效使用 HappyCapy 3126ea04998681cbb396dc0c52183fd4_en.html": [
     {
       "index": 1,
       "text": "git status  # 确认没有未提交的更改\ngit checkout -b feature/new-prototype"
@@ -129,7 +129,7 @@
       "text": "\"在实现这个功能时：\n- 写完代码后自动运行测试\n- 运行 lint 检查代码风格\n- 如果测试失败，自己分析原因并修复\n- 最后给我一份测试通过的代码\""
     }
   ],
-  "d:/howtobestusai1/WaytoAGI x Happycapy/HappyCapy 使用建议：真实团队的最佳实践/研究与学习 3126ea049986815b963be80819503258_en.html": [
+  "d:/howtobestusai1/HappyCapy/HappyCapy 使用建议：真实团队的最佳实践/研究与学习 3126ea049986815b963be80819503258_en.html": [
     {
       "index": 1,
       "text": "\"我需要理解'Transformer 架构'，但我没有深度学习背景。\n\n请：\n1. 用简单的类比解释 Transformer 是什么\n2. 说明它解决了什么问题（比之前的 RNN/LSTM 好在哪）\n3. 解释核心概念：Self-Attention、Multi-Head Attention、Positional Encoding\n4. 给我一个简单的代码示例（PyTorch）\n5. 推荐 3 篇入门级论文或博客\""
@@ -139,7 +139,7 @@
       "text": "\"帮我做一个文献综述，主题是'大语言模型的上下文学习能力'：\n\n1. 搜索相关论文（arXiv、Google Scholar）\n2. 总结 10 篇核心论文的主要贡献\n3. 识别研究趋势和共识\n4. 找出尚未解决的研究问题\n5. 生成一份结构化的文献综述报告（包含引用）\""
     }
   ],
-  "d:/howtobestusai1/WaytoAGI x Happycapy/HappyCapy 使用建议：真实团队的最佳实践/团队协作与文档管理 3126ea04998681f9a765e394e6e6b04a_en.html": [
+  "d:/howtobestusai1/HappyCapy/HappyCapy 使用建议：真实团队的最佳实践/团队协作与文档管理 3126ea04998681f9a765e394e6e6b04a_en.html": [
     {
       "index": 1,
       "text": "\"帮我创建一份'新员工入职指南':\n\n输入文档:\n- 公司政策文档(policy.pdf)\n- 技术栈介绍(tech_stack.md)\n- 常见问题 FAQ(faq.docx)\n- 团队联系方式(contacts.xlsx)\n\n输出要求:\n- Markdown 格式,清晰的章节结构\n- 提取关键信息,去除冗余\n- 添加目录和快速索引\n- 每个章节末尾添加\"延伸阅读\"链接\n- 最后生成 PDF 版本\""
@@ -149,13 +149,13 @@
       "text": "\"这是我们今天产品会议的录音转写:\n[粘贴转写文本]\n\n请:\n1. 总结会议的关键讨论点\n2. 提取所有行动项(Action Items),标注负责人和截止日期\n3. 识别未解决的问题\n4. 生成结构化的会议纪要\n5. 创建一个任务追踪表格(CSV 格式),可导入 Asana/Jira\""
     }
   ],
-  "d:/howtobestusai1/WaytoAGI x Happycapy/HappyCapy 使用建议：真实团队的最佳实践/产品设计与原型制作 3126ea04998681179769cd8d49281e70_en.html": [
+  "d:/howtobestusai1/HappyCapy/HappyCapy 使用建议：真实团队的最佳实践/产品设计与原型制作 3126ea04998681179769cd8d49281e70_en.html": [
     {
       "index": 1,
       "text": "\"帮我调整登录页面的视觉样式：\n\n文件：src/pages/Login.tsx\n\n变更需求：\n- 主色调从蓝色（#3B82F6）改为紫色（#8B5CF6）\n- 标题字体从 'Inter' 改为 'Poppins'，加粗 600\n- 输入框高度从 40px 改为 48px\n- 按钮圆角从 4px 改为 8px\n- 整体间距增加 20%，让页面更透气\n\n保持现有功能不变，只改样式。\""
     }
   ],
-  "d:/howtobestusai1/WaytoAGI x Happycapy/Automations （Beta）指南 3096ea049986806aa62afc6d8912db3f_en.html": [
+  "d:/howtobestusai1/HappyCapy/Automations （Beta）指南 3096ea049986806aa62afc6d8912db3f_en.html": [
     {
       "index": 1,
       "text": "帮我设置一个自动化任务：\n\n名称：每日新闻精选\n\n触发条件：每天早上 8:00\n\n执行流程：\n1. 抓取以下领域的热点新闻：\n   - AI 和科技\n   - 创业和商业\n   - 产品和设计\n2. 智能过滤：\n   - 排除娱乐八卦\n   - 排除标题党和广告\n   - 只保留有深度的内容\n3. AI 总结每条新闻（50 字核心内容）\n4. 按重要性排序（优先行业重大事件）\n5. 生成精美的 HTML 日报\n6. 发送到我的邮箱\n\n让我每天上班路上就能快速了解行业动态！"

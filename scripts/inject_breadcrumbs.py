@@ -219,8 +219,8 @@ def main() -> None:
                 links_in[target].append(resolved_fp)
         links_out[resolved_fp] = out_targets
 
-    zh_home_candidates = [p.resolve() for p in files if p.name.startswith("WaytoAGI x Happycapy ") and p.name.lower().endswith(".html") and not p.name.lower().endswith("_en.html")]
-    en_home_candidates = [p.resolve() for p in files if p.name.startswith("WaytoAGI x Happycapy ") and p.name.lower().endswith("_en.html")]
+    zh_home_candidates = [p.resolve() for p in files if p.name.startswith("HappyCapy ") and p.name.lower().endswith(".html") and not p.name.lower().endswith("_en.html")]
+    en_home_candidates = [p.resolve() for p in files if p.name.startswith("HappyCapy ") and p.name.lower().endswith("_en.html")]
 
     if not zh_home_candidates or not en_home_candidates:
         raise RuntimeError("Cannot find zh/en home files.")

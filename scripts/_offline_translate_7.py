@@ -3,13 +3,13 @@ import re
 from bs4 import BeautifulSoup, Comment, NavigableString
 
 FILES = [
-    Path(r"d:\howtobestusai1\WaytoAGI x Happycapy\快速上手 3096ea0499868002bcddc67c919bd1d4.html"),
-    Path(r"d:\howtobestusai1\WaytoAGI x Happycapy\欢迎使用Happycapy 3096ea04998680118520f6984c65445d.html"),
-    Path(r"d:\howtobestusai1\WaytoAGI x Happycapy\联系我们 3096ea04998680e88619c30a159342f9.html"),
-    Path(r"d:\howtobestusai1\WaytoAGI x Happycapy\欢迎使用Happycapy\一句话案例\Vibe-Coding 3096ea049986819b87a4c7f527d82ef0.html"),
-    Path(r"d:\howtobestusai1\WaytoAGI x Happycapy\欢迎使用Happycapy\一句话案例\内容创作 3096ea04998681c68aa2e95ef10017fb.html"),
-    Path(r"d:\howtobestusai1\WaytoAGI x Happycapy\欢迎使用Happycapy\一句话案例\文档处理 3096ea049986817bb900c16d8e1674b0.html"),
-    Path(r"d:\howtobestusai1\WaytoAGI x Happycapy\欢迎使用Happycapy\一句话案例\股票分析 3096ea04998681c1b315f10506bee25d.html"),
+    Path(r"d:\howtobestusai1\HappyCapy\快速上手 3096ea0499868002bcddc67c919bd1d4.html"),
+    Path(r"d:\howtobestusai1\HappyCapy\欢迎使用Happycapy 3096ea04998680118520f6984c65445d.html"),
+    Path(r"d:\howtobestusai1\HappyCapy\联系我们 3096ea04998680e88619c30a159342f9.html"),
+    Path(r"d:\howtobestusai1\HappyCapy\欢迎使用Happycapy\一句话案例\Vibe-Coding 3096ea049986819b87a4c7f527d82ef0.html"),
+    Path(r"d:\howtobestusai1\HappyCapy\欢迎使用Happycapy\一句话案例\内容创作 3096ea04998681c68aa2e95ef10017fb.html"),
+    Path(r"d:\howtobestusai1\HappyCapy\欢迎使用Happycapy\一句话案例\文档处理 3096ea049986817bb900c16d8e1674b0.html"),
+    Path(r"d:\howtobestusai1\HappyCapy\欢迎使用Happycapy\一句话案例\股票分析 3096ea04998681c1b315f10506bee25d.html"),
 ]
 
 TRANSLATIONS = {
@@ -158,7 +158,7 @@ TRANSLATIONS = {
     "• 查看实战案例演示": "• See real-world case demonstrations",
     "👉 立即订阅：": "👉 Subscribe now:",
     "💬 加入微信群": "💬 Join the WeChat Group",
-    "WaytoAGI × HappyCapy 中文社区": "WaytoAGI × HappyCapy Chinese Community",
+    "HappyCapy 中文社区": "HappyCapy Chinese Community",
     "• 与中文用户深度交流": "• Deep conversations with Chinese-speaking users",
     "• 分享使用经验和创意": "• Share usage experience and ideas",
     "• 获得中文支持和帮助": "• Get support in Chinese",

@@ -1,0 +1,865 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Multi-Agent Team 指南</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3096ea04-9986-8024-8c82-fbf994d3b1a2" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">👥</span></div><!-- BREADCRUMB_START -->
+<style>
+.hc-breadcrumb {
+  font-size: 14px;
+  margin-bottom: 0.75em;
+}
+.hc-breadcrumb-sep {
+  margin: 0 0.35em;
+  opacity: 0.6;
+}
+</style>
+<nav class="hc-breadcrumb" aria-label="Breadcrumb">
+  <a href="../HappyCapy%203096ea04998680d3ba0ef82161f9c1ce_tw.html">首頁</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <a href="../HappyCapy%203096ea04998680d3ba0ef82161f9c1ce_tw.html">HappyCapy</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <span aria-current="page">Multi-Agent Team 指南</span>
+</nav>
+<!-- BREADCRUMB_END -->
+
+
+
+<h1 class="page-title" dir="auto">Multi-Agent Team 指南</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="3096ea04-9986-8175-b26f-d4e5d8acdbb7" class="">Multi-Agent Team 指南</h1></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8177-a687-fdacf7f1307a" class=""><strong>HappyCapy 官方網站：</strong><a href="https://happycapy.ai/">https://happycapy.ai/</a> 在這裡，你可以看看機智可愛的 HappyCapy 如何成為你的 AI 夥伴，一起探索更多可能。</p></div><div style="display:contents" dir="auto"><hr id="3096ea04-9986-812a-8a6d-d40d0f7cac2d"/></div><div style="display:contents" dir="auto"><h2 id="3096ea04-9986-8115-93ce-de552df2b21b" class="">什麼是 Multi-Agent Team</h2></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8140-9383-d648e22e8ad2" class="">在複雜項目中，單個 AI 可能無法完美處理所有方面。Multi-Agent Team 允許你建立專門的 AI 智能體，每個負責不同的任務：</p></div><div style="display:contents" dir="ltr"><figure id="3096ea04-9986-8183-bda3-f218aece93c9" class="image"><a href="Multi-Agent%20Team%20%E6%8C%87%E5%8D%97/image.png"><img style="width:691.982177734375px" src="Multi-Agent%20Team%20%E6%8C%87%E5%8D%97/image.png"/></a></figure></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-8135-8c6c-fce55193b476" class="bulleted-list"><li style="list-style-type:disc">研究員：負責搜索和整理資訊</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-8164-a7c9-fa6bb4c981a0" class="bulleted-list"><li style="list-style-type:disc">設計師：負責視覺設計和創意</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-8152-b494-cad611682b40" class="bulleted-list"><li style="list-style-type:disc">開發者：負責編寫和優化程式碼</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-818c-b0ca-f24e014c59cc" class="bulleted-list"><li style="list-style-type:disc">測試員：負責質量檢查和測試</li></ul></div><div style="display:contents" dir="auto"><h2 id="3096ea04-9986-81af-94b3-c9c60f35bc49" class="">如何使用 Multi-Agent Team</h2></div><div style="display:contents" dir="auto"><h2 id="3096ea04-9986-81e8-9c8a-e9e6d0153e55" class="">⚙️開啓 Agent Teams 功能</h2></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8135-864c-ec5a9c16167f" class="">在使用 Multi-Agent Team 之前，需要先開啓這個實驗性功能：</p></div><div style="display:contents" dir="auto"><ol type="1" id="3096ea04-9986-8166-a43b-d0da3bcc92bd" class="numbered-list" start="1"><li><strong>點選左下角的頭像</strong>，打開<strong>「Settings」</strong>頁面</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3096ea04-9986-8135-90c5-ee5e19e1fee9" class="numbered-list" start="2"><li><strong>找到「Experimental」實驗性功能</strong> 選項</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3096ea04-9986-8118-9b40-e31e9171f67a" class="numbered-list" start="3"><li><strong>打開「Agent Teams」開關</strong></li></ol></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="3096ea04-9986-8116-a5dc-eb566c0e1eb0"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">💡 <strong>提示</strong>：Agent Teams 目前是實驗性功能，我們正在持續優化體驗。開啓後，你就可以在對話中建立多智能體團隊了！</div></figure></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-81b6-b65c-d7f1bb18d142" class="">只需在對話中說明你需要團隊協作，HappyCapy 會自動建立和管理 Agent Team：</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3096ea04-9986-81ae-b36b-f7fde97496c9" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">我需要開發一個完整的網站，包括前端、後端和資料庫設計。
+請組建一個團隊來完成這個項目。</code></pre></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-812f-8af2-ec165dfe742a" class="">HappyCapy 會自動：</p></div><div style="display:contents" dir="auto"><ol type="1" id="3096ea04-9986-8158-beb2-f22bfc1181be" class="numbered-list" start="1"><li>建立合適的 Agent 角色</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3096ea04-9986-8141-9a16-f7f16f0414b8" class="numbered-list" start="2"><li>分配任務給各個 Agent</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3096ea04-9986-8163-af02-f592b8aafb03" class="numbered-list" start="3"><li>協調各 Agent 之間的協作</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3096ea04-9986-81e5-91d1-d9ded7737f53" class="numbered-list" start="4"><li>整合所有成果</li></ol></div><div style="display:contents" dir="auto"><h2 id="3096ea04-9986-8198-b221-f5ddc98507b1" class="">適用場景</h2></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-81da-9956-d55faf981b59" class="bulleted-list"><li style="list-style-type:disc">複雜項目開發（需要多個專業領域）</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-81f6-99a9-e460aa739a8b" class="bulleted-list"><li style="list-style-type:disc">內容創作（研究 + 寫作 + 設計）</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-819e-89fc-e678313bdce9" class="bulleted-list"><li style="list-style-type:disc">資料分析項目（收集 + 清洗 + 分析 + 可視化）</li></ul></div><div style="display:contents" dir="auto"><ul id="3096ea04-9986-8150-96d6-d4b974c026bc" class="bulleted-list"><li style="list-style-type:disc">營銷活動（策劃 + 設計 + 文案 + 執行）</li></ul></div><div style="display:contents" dir="auto"><hr id="3096ea04-9986-8125-b4e4-e5bb6ea20958"/></div><div style="display:contents" dir="auto"><h2 id="3096ea04-9986-81a5-a304-c4bcb6c75b57" class="">🎯 實戰案例：團隊協作的魔力</h2></div><div style="display:contents" dir="auto"><h3 id="3096ea04-9986-81ed-8195-f28d59808bd9" class="">🍅 案例：番茄鍾應用開發</h3></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8134-90af-d4162caf232e" class="">執行時間：3-4 分鐘 | 難度：⭐⭐⭐⭐</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8183-bd16-d04f2ca58bfc" class="">原本需要：需求分析 + UI 設計 + 前端開發 + 測試 = 幾天工作</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-815a-ae9a-da9ed434b128" class="">現在：一次對話，團隊自動分工，4 分鐘交付完整應用</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3096ea04-9986-81b9-afbf-c7a90253f615" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">請組建一個開發團隊，請幫我完成「番茄鍾」應用：
+
+產品需求：
+- 25 分鐘工作計時（可暫停/重置）
+- 5 分鐘休息提醒（聲音 + 視覺提示）
+- 統計今日完成的番茄鍾次數
+- 簡潔美觀的介面設計（漸變色、現代風格）
+- 響應式佈局（支援手機和電腦）
+- 本地儲存（刷新不丟失資料）
+
+團隊分工建議：
+1. 產品經理：梳理功能邏輯和使用者流程
+2. UI 設計師：設計介面和交互方案
+3. 前端工程師：實現功能（HTML/CSS/JavaScript）
+4. 測試工程師：驗證功能完整性
+
+請團隊協作完成，並給我一個可直接使用的網頁應用！</code></pre></div><div style="display:contents" dir="ltr"><figure id="3096ea04-9986-8172-b03b-eaacceecf625" class="image"><a href="Multi-Agent%20Team%20%E6%8C%87%E5%8D%97/QQ_1771162342326.png"><img style="width:2613px" src="Multi-Agent%20Team%20%E6%8C%87%E5%8D%97/QQ_1771162342326.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="3096ea04-9986-81cf-bf11-cbc34005d5c4"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">💡 你會看到團隊成員並行工作：產品經理規劃、設計師設計、工程師開發、測試員驗證同時進行。整個過程就像真實團隊協作，但效率提升數倍，只需 3-4 分鐘！</div></figure></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-8196-811b-d8b7f17f314a" class="">震撼點：你會拿到一個完整的、可以直接使用的網頁應用，包括完整程式碼、美觀介面、流暢動畫、可靠功能。</p></div><div style="display:contents" dir="ltr"><figure id="3096ea04-9986-81a9-ac13-fc333d845246" class="image"><a href="Multi-Agent%20Team%20%E6%8C%87%E5%8D%97/QQ_1771163137300.png"><img style="width:2628px" src="Multi-Agent%20Team%20%E6%8C%87%E5%8D%97/QQ_1771163137300.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-816e-8b80-ddb247c940f8" class="">💡 <strong>更靈活的是</strong>：團隊中的不同 Agent 還可以使用不同的大模型（如 Sonnet、Gemini、Haiku），讓每個智能體在各自擅長的領域發揮最佳性能。</p></div><div style="display:contents" dir="auto"><p id="3096ea04-9986-818d-aaa0-dd29371fed09" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="3096ea04-9986-81f0-86de-c71d5df74265"><div style="font-size:1.5em"><span class="icon">💰</span></div><div style="width:100%">💰 <strong>小貼士</strong>：多智能體團隊協作的效率很高，但 token 消耗也會相應增加。如果你經常使用團隊功能，推薦開通 Max 訂閱，暢享無限 token，專注於創造而不用擔心用量。</div></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
+<style>
+#lang-toggle-select {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
+  color: #24292f;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+#lang-toggle-select:hover {
+  background: #f6f8fa;
+}
+</style>
+<script>
+(function () {
+  var KEY = 'site_lang_pref';
+  var pref = localStorage.getItem(KEY);
+  if (!pref) {
+    pref = 'en';
+    localStorage.setItem(KEY, pref);
+  }
+
+  function toEn(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
+    return pathname.replace(/\.html$/i, '_en.html');
+  }
+
+  function toZh(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
+  }
+
+  var rawPath = decodeURI(window.location.pathname || '');
+  var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
+
+  if (pref === 'en' && !isEn) {
+    var enPath = toEn(rawPath);
+    if (enPath !== rawPath) {
+      window.location.replace(encodeURI(enPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh' && !isZh) {
+    var zhPath = toZh(rawPath);
+    if (zhPath !== rawPath) {
+      window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
+    var currentPath = decodeURI(window.location.pathname || '');
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
+    localStorage.setItem(KEY, targetLang);
+    window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.appendChild(select);
+  });
+})();
+</script>
+<!-- LANG_TOGGLE_END --></body></html>

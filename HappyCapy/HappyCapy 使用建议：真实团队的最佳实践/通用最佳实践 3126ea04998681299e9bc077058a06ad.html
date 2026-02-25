@@ -1,0 +1,847 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>通用最佳实践</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3126ea04-9986-8129-9e9b-c077058a06ad" class="page sans"><header><img class="page-cover-image" src="%E9%80%9A%E7%94%A8%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/v3-08-best-practices.png" style="object-position:center 19.57%"/><!-- BREADCRUMB_START -->
+<style>
+.hc-breadcrumb {
+  font-size: 14px;
+  margin-bottom: 0.75em;
+}
+.hc-breadcrumb-sep {
+  margin: 0 0.35em;
+  opacity: 0.6;
+}
+</style>
+<nav class="hc-breadcrumb" aria-label="Breadcrumb">
+  <a href="../../HappyCapy%203096ea04998680d3ba0ef82161f9c1ce.html">首页</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <a href="../HappyCapy%20%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE%EF%BC%9A%E7%9C%9F%E5%AE%9E%E5%9B%A2%E9%98%9F%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%203126ea04998680ddb840dfae4e413585.html">HappyCapy 使用建议：真实团队的最佳实践</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <span aria-current="page">通用最佳实践</span>
+</nav>
+<!-- BREADCRUMB_END -->
+
+
+
+<h1 class="page-title" dir="auto">通用最佳实践</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-81f3-9f6d-efa0806cf769" class="">✅ 高效使用 HappyCapy 的黄金法则</h2></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8183-aa88-dae7913e4bf4" class="">1. 清晰描述你的目标，而非过程</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8182-aac8-f764cb9899ed" class="">❌ 不好的提示：</p></div><div style="display:contents" dir="auto"><blockquote id="3126ea04-9986-812a-9929-c6c57d372bbb" class="">&quot;先用 pandas 读取 CSV，然后用 matplotlib 画图&quot;</blockquote></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81b6-aa7f-f2297abd13e9" class="">✅ 好的提示：</p></div><div style="display:contents" dir="auto"><blockquote id="3126ea04-9986-816c-b35c-c4e3c027a785" class="">&quot;分析这份销售数据，生成趋势图，告诉我关键发现&quot;</blockquote></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81c3-abfc-d7308066ecff" class=""><mark class="highlight-default"><strong>为什么？ HappyCapy 会自动选择最佳工具和方法，你只需要说明目标。</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8137-ab3b-f6b1a93a5304"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81fb-b21a-e8abaabe298b" class="">2. 提供足够的上下文</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-819c-a2d0-d7fcb4c5368c" class="">❌ 不好的提示：</p></div><div style="display:contents" dir="auto"><blockquote id="3126ea04-9986-814a-be1c-f5cf55f0cfcd" class="">&quot;帮我修复这个 bug&quot;</blockquote></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81ef-a9f1-e910befb7672" class="">✅ 好的提示：</p></div><div style="display:contents" dir="auto"><blockquote id="3126ea04-9986-810b-a615-f1271d20bea0" class="">&quot;用户点击登录按钮后没有反应。<br/><br/>环境：React 18 + TypeScript<br/>文件：src/components/LoginForm.tsx<br/>浏览器控制台显示：&#x27;Cannot read property of undefined&#x27;<br/>预期行为：点击后应该发送 API 请求并跳转到首页<br/><br/>请帮我定位问题并修复。&quot;</blockquote></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81e8-9e6b-dc980c03b930"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8188-ac2c-ccc4f7945b47" class="">3. 迭代式工作，不要要求一次性完美</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8128-b123-cdc99e99e896" class="">❌ 不好的提示：</p></div><div style="display:contents" dir="auto"><blockquote id="3126ea04-9986-817b-985d-cb69a981bb27" class="">&quot;帮我构建一个完整的电商网站，包含用户认证、产品列表、购物车、支付集成、订单管理、评论系统、推荐算法...&quot;</blockquote></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81cf-8a56-e9007247a9b7" class="">✅ 好的提示：</p></div><div style="display:contents" dir="auto"><blockquote id="3126ea04-9986-81a0-994a-e0d39301d3f1" class="">&quot;先帮我搭建基本框架：<br/>- 首页展示产品列表<br/>- 产品详情页<br/>- 简单的购物车（无需后端）<br/><br/>完成后我们再逐步添加功能。&quot;</blockquote></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-818d-80fa-f5c340558e2b" class=""><mark class="highlight-default"><strong>原则： 拆解大任务 → 逐步实现 → 每步验证</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8158-bfe5-f2a6545ddb68"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8188-93fe-c83de2989e4e" class="">4. 利用 HappyCapy 的多模态能力</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8157-8acd-d6159ca50ad2" class="">你可以：</p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81a9-9402-c1f258a7edcb" class="bulleted-list"><li style="list-style-type:disc">📷 粘贴截图（Cmd/Ctrl + V）</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8139-8cec-f5e948e42f05" class="bulleted-list"><li style="list-style-type:disc">📎 上传文件（PDF、Excel、Word、图片）</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81b9-ad79-eddd47ffe601" class="bulleted-list"><li style="list-style-type:disc">🔗 分享网页链接</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81f2-b99e-d8906fb49cc3" class="bulleted-list"><li style="list-style-type:disc">🎤 提供录音或视频（转写后分析）</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8130-81e7-f73333c03d66"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81f5-8fb7-c216cd51fd69" class="">5. 保存成功的工作流</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-817f-aa6f-e3ec6264f3aa" class="">当一个提示效果很好时：</p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81c1-a7cb-d84b9baa2df3" class="bulleted-list"><li style="list-style-type:disc">📝 记录下来（复制到笔记）</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81b5-a9d0-c6f0f2d2f371" class="bulleted-list"><li style="list-style-type:disc">🏷️ 标注使用场景</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-818c-8072-ffd05988e07b" class="bulleted-list"><li style="list-style-type:disc">🔄 下次直接复用或微调</li></ul></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8143-8d07-fbe4fd1b7ec2" class=""><mark class="highlight-default"><strong>Pro Tip： 你可以把成功的工作流自定义为技能（Skill），所有用户都可以这样做！我们鼓励你创建自己的技能库，让重复任务一键执行。Pro/Max 用户还可以设置定时自动化。</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8131-a6bb-dfe4dc843d83"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81ae-a092-c8f11a880857" class="">6. 定期检查点，方便回滚</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-817c-be9b-d356723bae1e" class="">对于长时间任务或实验性工作：</p></div><div style="display:contents" dir="auto"><blockquote id="3126ea04-9986-811b-9db9-f9159b561528" class="">&quot;在实现这个功能前，先让我确认当前代码都保存好了&quot;</blockquote></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-810d-80e2-eee6d1fb702e" class="bulleted-list"><li style="list-style-type:disc">如果使用 Git：定期提交</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8180-80c8-db913c90fe98" class="bulleted-list"><li style="list-style-type:disc">如果在 HappyCapy 工作区：定期下载备份</li></ul></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8149-8869-f24e48a3ee24" class=""><mark class="highlight-default"><strong>像玩游戏一样存档，出错时可以轻松回滚。</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8192-8cf6-ea3f7ec11cba"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8123-879d-c5801620d1dc" class="">7. 明确你的技术水平</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-813c-bcb3-e69b123b72ad" class="">在对话开始时说明：</p></div><div style="display:contents" dir="auto"><blockquote id="3126ea04-9986-812d-85ee-d68600e4fb9c" class="">&quot;我是设计师，不太懂编程，请用简单语言解释&quot;</blockquote></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8167-a6ec-e44427668bdd" class="">或</p></div><div style="display:contents" dir="auto"><blockquote id="3126ea04-9986-819e-b701-c593f0423969" class="">&quot;我是高级开发者,熟悉 React 和 TypeScript，可以直接给我代码&quot;</blockquote></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81ef-8288-d268815300b6" class="">HappyCapy 会调整沟通方式和细节程度。</p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81f1-a030-f774acad3d7d"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8149-a304-dbd1a7598967" class="">8. 不要害怕&quot;重新开始&quot;</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81eb-8051-c48bf011b491" class="">如果对话方向跑偏了：</p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-812e-8530-fd4af8fe3b32" class="bulleted-list"><li style="list-style-type:disc">不要试图纠正 AI 的错误方向</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8164-a0b6-e8c7f24c1b91" class="bulleted-list"><li style="list-style-type:disc">直接开新对话，重新描述任务</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8133-93a7-df55302b6e83" class="bulleted-list"><li style="list-style-type:disc">通常比修正更快</li></ul></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-814f-b478-ef26b1023d8c" class=""><mark class="highlight-default"><strong>像使用&quot;老虎机&quot;：</strong></mark></p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81ae-b728-c53e0bd11367" class="bulleted-list"><li style="list-style-type:disc">保存状态</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8193-ab2d-f5fd46bfccd1" class="bulleted-list"><li style="list-style-type:disc">尝试 30 分钟</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81f6-a186-dbe7fdf6aa86" class="bulleted-list"><li style="list-style-type:disc">满意就接受，不满意就重来</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8101-b723-c8fd22d3629d"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-817a-a965-c8144f2233cd" class="">9. 利用 HappyCapy 的技能系统</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8168-9226-fdbbc22c2b0f" class="">HappyCapy 支持使用开源社区的所有技能，涵盖：</p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81e6-b0df-d36b70b9932e" class="bulleted-list"><li style="list-style-type:disc">🎨 图像/视频生成</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81a2-a8a9-f7c5db915efa" class="bulleted-list"><li style="list-style-type:disc">📄 文档处理（PDF、Word、Excel、PPT）</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81af-9316-e85d6f2263dc" class="bulleted-list"><li style="list-style-type:disc">🌐 网页开发</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81e2-88fb-de0d8ccb03b5" class="bulleted-list"><li style="list-style-type:disc">📊 数据分析</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-817e-8e1a-c9dc5728b1c4" class="bulleted-list"><li style="list-style-type:disc">🔬 学术研究</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8115-b674-f0857784f9f6" class="bulleted-list"><li style="list-style-type:disc">📧 邮件自动化</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8103-ab04-f87075b1eab0" class="bulleted-list"><li style="list-style-type:disc">🎥 视频剪辑</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8170-8bc2-c7f742f0e599" class="bulleted-list"><li style="list-style-type:disc">...更多</li></ul></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-818e-a424-de3df969e862" class=""><mark class="highlight-default"><strong>使用方法：</strong></mark></p></div><div style="display:contents" dir="auto"><blockquote id="3126ea04-9986-8113-9646-fd1b63dc5376" class="">&quot;用 ai-image-generation 技能帮我生成一张科技感海报&quot;<br/>&quot;用 comprehensive-researcher 技能研究&#x27;大语言模型的最新进展&#x27;&quot;</blockquote></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81fe-8330-e1a3dcf88452" class="">查看所有可用技能：在 HappyCapy 对话中输入 <mark class="highlight-default"><code>/help</code></mark></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-817a-946c-e4824e1920e8"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8117-af22-f43136d676b5" class="">10. Max Plan 用户：拥抱&quot;无限&quot;心态</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8167-81bc-d5eca4a501e0" class="">如果你使用 Max Plan：</p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-817e-81e6-f630d20e1d9a" class="bulleted-list"><li style="list-style-type:disc">✅ 不要担心 token 用量</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81bb-930d-f43ea6cd26b5" class="bulleted-list"><li style="list-style-type:disc">✅ 大胆尝试复杂任务</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8188-b3a1-d48ce459c7f4" class="bulleted-list"><li style="list-style-type:disc">✅ 让 HappyCapy 自主工作更长时间</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8128-87a5-f37b3c176f6e" class="bulleted-list"><li style="list-style-type:disc">✅ 多次迭代直到满意</li></ul></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8139-9a17-d7ebffee3e67" class=""><mark class="highlight-default"><strong>这就是 Max Plan 的价值：零焦虑使用 AI。</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81aa-b3ef-e3b522039b42"/></div><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-81bc-a901-cb85a1da0a13" class="">🚫 常见误区与避免方法</h2></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8114-90cf-cad750cbc00c" class="">误区 1：&quot;AI 应该一次性给我完美结果&quot;</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8130-8a14-e2cacbb9b3bd" class=""><mark class="highlight-default"><strong>现实： AI 是协作伙伴，不是魔法棒。</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81ff-ae55-ec697dff06bc" class=""><mark class="highlight-default"><strong>正确心态：</strong></mark></p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8114-8de9-da8b8c9bc6e8" class="bulleted-list"><li style="list-style-type:disc">迭代式工作</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81dd-9800-f6f393770d83" class="bulleted-list"><li style="list-style-type:disc">提供反馈</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81a2-a3c4-e5b108e1dbe3" class="bulleted-list"><li style="list-style-type:disc">逐步改进</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81c3-83ec-ee39ff0815c9"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81fb-a181-d42db16f7363" class="">误区 2：&quot;我的提示不够&#x27;专业&#x27;，AI 不会理解&quot;</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81ce-b357-fe2e5fdd7659" class=""><mark class="highlight-default"><strong>现实： 自然语言就是最好的提示。</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-810d-b3e1-e9d155c3a5db" class=""><mark class="highlight-default"><strong>正确方法：</strong></mark></p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8142-833e-d4bf03730d0b" class="bulleted-list"><li style="list-style-type:disc">像和朋友聊天一样描述需求</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81fe-8d03-d67b47c4b117" class="bulleted-list"><li style="list-style-type:disc">不需要学&quot;提示工程&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8189-bae2-d90af33106f2" class="bulleted-list"><li style="list-style-type:disc">HappyCapy 会理解你的意图</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8154-abfc-c3b45db3c3ed"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81cc-8ecf-de03619cf675" class="">误区 3：&quot;我不懂技术，不能用 AI 编程工具&quot;</h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81ec-b2cd-e196f8009143" class=""><mark class="highlight-default"><strong>现实： HappyCapy 专为非技术人员设计。</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-819a-a2e9-dac72fe729a3" class=""><mark class="highlight-default"><strong>证据：</strong></mark></p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8148-9e69-e2432368a370" class="bulleted-list"><li style="list-style-type:disc">财务团队零编程经验，自己执行复杂数据工作流</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81ce-b4f6-ce9ca57f9202" class="bulleted-list"><li style="list-style-type:disc">法律团队无开发背景,一小时构建无障碍应用</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8183-9e92-cff429b3b450" class="bulleted-list"><li style="list-style-type:disc">产品设计师直接实现前端功能</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81fe-9fcf-da43f4e0bfec"/></div><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-8153-91f5-f021657b6917" class="">🎯 不同角色的快速上手路径</h2></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81a3-888a-d2283e10f709" class="">非技术人员（3 步上手）</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81be-9536-f26367d2edf2" class="numbered-list" start="1"><li><mark class="highlight-default"><strong>第一周： 尝试简单任务（&quot;帮我做张海报&quot;、&quot;分析这份 Excel&quot;）</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-810a-b1da-ccb36e92e87f" class="numbered-list" start="2"><li><mark class="highlight-default"><strong>第二周： 保存有效的提示，建立自己的工作流库</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81f2-815c-e1a4b4dd5e8f" class="numbered-list" start="3"><li><mark class="highlight-default"><strong>第三周： 设置自动化（Pro/Max），处理重复任务</strong></mark></li></ol></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-815c-9d26-fcba83757128" class="">开发者（3 步上手）</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-819c-ba76-d3ef9019f8c3" class="numbered-list" start="1"><li><mark class="highlight-default"><strong>第一天： 用 HappyCapy 理解陌生代码库、生成测试</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81cd-9770-dafa67a58606" class="numbered-list" start="2"><li><mark class="highlight-default"><strong>第一周： 让 HappyCapy 自主实现小功能，你负责审查</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81f5-8504-df232045bdc4" class="numbered-list" start="3"><li><mark class="highlight-default"><strong>第一月： 构建自验证循环，让 HappyCapy 长时间自主工作</strong></mark></li></ol></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8136-a2fb-cfd4977d57c5" class="">数据分析师（3 步上手）</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-8124-a59c-c6e96437d824" class="numbered-list" start="1"><li><mark class="highlight-default"><strong>第一天： 上传数据，让 HappyCapy 做探索性分析</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-8108-8279-f51bcc71fcd7" class="numbered-list" start="2"><li><mark class="highlight-default"><strong>第一周： 让 HappyCapy 构建交互式仪表盘</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-8163-b28e-d0edf30209a2" class="numbered-list" start="3"><li><mark class="highlight-default"><strong>第一月： 把常用分析工作流保存为可复用工具</strong></mark></li></ol></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8101-a93a-deb46c3726ea" class="">营销人员（3 步上手）</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81ba-98ee-c758a1ed9621" class="numbered-list" start="1"><li><mark class="highlight-default"><strong>第一天： 批量生成文案变体</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-813c-923b-cc9f525ff4a1" class="numbered-list" start="2"><li><mark class="highlight-default"><strong>第一周： 自动化广告创意生产</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81fa-b675-ecdea8258453" class="numbered-list" start="3"><li><mark class="highlight-default"><strong>第一月： 连接 MCP 服务器（Meta Ads、Google Ads），构建营销自动化系统</strong></mark></li></ol></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81f2-8eb9-d392a5a31cd4" class="">产品设计师（3 步上手）</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-8111-aca2-e3ef5879a390" class="numbered-list" start="1"><li><mark class="highlight-default"><strong>第一天： 粘贴 Mockup，生成前端代码原型</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81d4-a310-c40dbd617ad9" class="numbered-list" start="2"><li><mark class="highlight-default"><strong>第一周： 直接实现简单的样式调整</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81c1-83f6-e2d3e7bfa575" class="numbered-list" start="3"><li><mark class="highlight-default"><strong>第一月： 构建设计系统组件库</strong></mark></li></ol></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81cb-80aa-e35822f4627e"/></div><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-8144-8909-e0d790967ec6" class="">📊 效果对比：使用 HappyCapy 前后</h2></div><div style="display:contents" dir="ltr"><table id="294bc9c5-0fad-493d-a9c4-abbe8cf40630" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="4a479e35-d6eb-4b7e-9538-9136e4fa598b"><th id="AaE~" class="simple-table-header-color simple-table-header"><strong>任务类型</strong></th><th id="_NB;" class="simple-table-header-color simple-table-header"><strong>传统方式时间</strong></th><th id="KpTZ" class="simple-table-header-color simple-table-header"><strong>HappyCapy 时间</strong></th><th id="W[Tf" class="simple-table-header-color simple-table-header"><strong>节省比例</strong></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="8ad8f8cf-becb-4b69-870b-6498be631259"><td id="AaE~" class="">调试复杂基础设施问题</td><td id="_NB;" class="">10-15 分钟</td><td id="KpTZ" class="">~5 分钟</td><td id="W[Tf" class="">50%</td></tr></div><div style="display:contents" dir="ltr"><tr id="e518422b-b453-46d8-95b1-773c291fb3a9"><td id="AaE~" class="">批量生成广告文案</td><td id="_NB;" class="">2 小时</td><td id="KpTZ" class="">15 分钟</td><td id="W[Tf" class="">87%</td></tr></div><div style="display:contents" dir="ltr"><tr id="47c9fbc8-fe28-4a4b-80f5-3bbfcb8c7691"><td id="AaE~" class="">理解陌生代码库</td><td id="_NB;" class="">数小时</td><td id="KpTZ" class="">几分钟</td><td id="W[Tf" class="">80-90%</td></tr></div><div style="display:contents" dir="ltr"><tr id="84f7d78c-f991-425a-92c0-ae5336397a87"><td id="AaE~" class="">ML 概念研究学习</td><td id="_NB;" class="">1 小时</td><td id="KpTZ" class="">10-20 分钟</td><td id="W[Tf" class="">80%</td></tr></div><div style="display:contents" dir="ltr"><tr id="4ebd05de-2fe4-4ce2-9e35-c3a91da26e4c"><td id="AaE~" class="">创建数据可视化仪表盘</td><td id="_NB;" class="">1-2 天</td><td id="KpTZ" class="">数小时</td><td id="W[Tf" class="">75%</td></tr></div><div style="display:contents" dir="ltr"><tr id="83723081-e558-490e-a697-9d9277895066"><td id="AaE~" class="">全局文案变更</td><td id="_NB;" class="">1 周</td><td id="KpTZ" class="">1 小时</td><td id="W[Tf" class="">95%</td></tr></div><div style="display:contents" dir="ltr"><tr id="7d341cdc-f302-467b-90d5-330b59416d78"><td id="AaE~" class="">新员工入职代码库</td><td id="_NB;" class="">数周</td><td id="KpTZ" class="">数天</td><td id="W[Tf" class="">70%</td></tr></div><div style="display:contents" dir="ltr"><tr id="7313d7e0-fea0-4f9f-96bf-f714904abcea"><td id="AaE~" class="">设计到前端实现</td><td id="_NB;" class="">数天往复</td><td id="KpTZ" class="">数小时</td><td id="W[Tf" class="">66%</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-816e-80ad-f3bde0ca218c" class=""><mark class="highlight-default"><strong>整体生产力提升：2-4 倍</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8192-9afb-c94b840ed248"/></div><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-8143-8d33-c5d8c0603499" class="">💡 最后的建议</h2></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-816b-9cd2-c58878734b63" class="">记住 HappyCapy 的核心理念</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-8114-ad94-d3f4a47142f6" class="numbered-list" start="1"><li><mark class="highlight-default"><strong>AI 应该为所有人服务 - 不只是开发者</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81ec-888d-f57a5c5a8132" class="numbered-list" start="2"><li><mark class="highlight-default"><strong>专注于&quot;想要什么&quot; - 而非&quot;怎么做&quot;</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81a6-9cd5-e0e87396e352" class="numbered-list" start="3"><li><mark class="highlight-default"><strong>零焦虑使用 - Max Plan 无限使用，回归工作本身</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-8131-ba41-d2363910aeee" class="numbered-list" start="4"><li><mark class="highlight-default"><strong>像水豚一样 chill - 放松、友好、与所有人和谐共处</strong></mark></li></ol></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8180-8da9-f412c174bf6f" class="">你不需要：</h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8134-bb92-ff216df00bac" class="bulleted-list"><li style="list-style-type:disc">❌ 学命令行</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-819a-9969-f997a6337f72" class="bulleted-list"><li style="list-style-type:disc">❌ 懂编程</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8198-9153-c99e474b7a8f" class="bulleted-list"><li style="list-style-type:disc">❌ 配置复杂环境</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-818e-8730-f2d1e123a945" class="bulleted-list"><li style="list-style-type:disc">❌ 记忆提示工程技巧</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-819a-a557-eb3a75beed8c" class="bulleted-list"><li style="list-style-type:disc">❌ 担心用量（Max Plan）</li></ul></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8176-afa4-f6c7b740b650" class="">你只需要：</h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-819d-bf1f-c597729698db" class="bulleted-list"><li style="list-style-type:disc">✅ 说出你想做什么</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8114-b253-febdced21273" class="bulleted-list"><li style="list-style-type:disc">✅ 相信 HappyCapy 会选择合适的工具</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-818e-8b6a-e8c6ec1983c9" class="bulleted-list"><li style="list-style-type:disc">✅ 迭代式工作，逐步完善</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8108-952d-fe2791a657e5" class="bulleted-list"><li style="list-style-type:disc">✅ 享受 AI 带来的生产力飞跃</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-814f-b9fa-d3cd7ccfa518"/></div><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-8122-95f3-d15d95d4db43" class="">📞 需要帮助？</h2></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81ec-adb8-d2723eaa491d" class="bulleted-list"><li style="list-style-type:disc"><a href="https://discord.gg/N3vdDbvsF8">https://discord.gg/N3vdDbvsF8</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81b1-881b-f09c54996ec3" class="bulleted-list"><li style="list-style-type:disc">📧 邮件支持：support@happycapy.ai</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-811c-8fa0-d6fc131ead64" class="bulleted-list"><li style="list-style-type:disc"><a href="https://happycapy.ai/help">https://happycapy.ai/</a></li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81d0-8895-d4a75507d823" class="bulleted-list"><li style="list-style-type:disc"><a href="https://calendly.com/trickle-booking/happycapy-walkthrough">https://calendly.com/trickle-booking/happycapy-walkthrough</a></li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-812e-a03c-fb6553de50ef"/></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8160-bf3a-f6104ccdca31" class=""><mark class="highlight-default"><strong>HappyCapy, HappyYou 🦫✨</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81fe-9fd3-d7b22df5ee40" class="">让 AI 成为你最得力的助手，回归工作的快乐本身。</p></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8100-975b-c3a197b9f5d3" class=""><a href="https://happycapy.ai/">https://happycapy.ai/</a></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81f8-97b2-dfa1f424a1cd"/></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-814f-abdf-f5bf82964a15" class="block-color-default">🦫 <mark class="highlight-default"><strong>HappyCapy 官网直通车：</strong></mark><mark class="highlight-default"><strong><a href="https://happycapy.ai/">https://happycapy.ai/</a></strong></mark> 在这里，你可以看到机智可爱的 HappyCapy 如何成为你的 AI 伙伴，一起探索无限可能！✨</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
+<style>
+#lang-toggle-select {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
+  color: #24292f;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+#lang-toggle-select:hover {
+  background: #f6f8fa;
+}
+</style>
+<script>
+(function () {
+  var KEY = 'site_lang_pref';
+  var pref = localStorage.getItem(KEY);
+  if (!pref) {
+    pref = 'en';
+    localStorage.setItem(KEY, pref);
+  }
+
+  function toEn(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
+    return pathname.replace(/\.html$/i, '_en.html');
+  }
+
+  function toZh(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
+  }
+
+  var rawPath = decodeURI(window.location.pathname || '');
+  var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
+
+  if (pref === 'en' && !isEn) {
+    var enPath = toEn(rawPath);
+    if (enPath !== rawPath) {
+      window.location.replace(encodeURI(enPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh' && !isZh) {
+    var zhPath = toZh(rawPath);
+    if (zhPath !== rawPath) {
+      window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
+    var currentPath = decodeURI(window.location.pathname || '');
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
+    localStorage.setItem(KEY, targetLang);
+    window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.appendChild(select);
+  });
+})();
+</script>
+<!-- LANG_TOGGLE_END --></body></html>

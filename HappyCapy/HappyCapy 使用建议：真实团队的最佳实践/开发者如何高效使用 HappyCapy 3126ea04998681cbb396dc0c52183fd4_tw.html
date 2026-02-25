@@ -1,0 +1,888 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>開發者如何高效使用 HappyCapy</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3126ea04-9986-81cb-b396-dc0c52183fd4" class="page sans"><header><img class="page-cover-image" src="%E5%BC%80%E5%8F%91%E8%80%85%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E4%BD%BF%E7%94%A8%20HappyCapy/v3-02-developer.png" style="object-position:center 33.15%"/><!-- BREADCRUMB_START -->
+<style>
+.hc-breadcrumb {
+  font-size: 14px;
+  margin-bottom: 0.75em;
+}
+.hc-breadcrumb-sep {
+  margin: 0 0.35em;
+  opacity: 0.6;
+}
+</style>
+<nav class="hc-breadcrumb" aria-label="Breadcrumb">
+  <a href="../../HappyCapy%203096ea04998680d3ba0ef82161f9c1ce_tw.html">首頁</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <a href="../HappyCapy%20%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE%EF%BC%9A%E7%9C%9F%E5%AE%9E%E5%9B%A2%E9%98%9F%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%203126ea04998680ddb840dfae4e413585_tw.html">HappyCapy 使用建議：真實團隊的最佳實踐</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <span aria-current="page">開發者如何高效使用 HappyCapy</span>
+</nav>
+<!-- BREADCRUMB_END -->
+
+
+
+<h1 class="page-title" dir="auto">開發者如何高效使用 HappyCapy</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><hr id="3126ea04-9986-818a-bfd9-c17c129a6431"/></div><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-81aa-ace8-db898a1ed821" class=""><strong>適用人羣</strong></h2></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8135-9cc1-d7e7e9ea2901" class="">軟體工程師、資料工程師、DevOps、安全工程師</p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81c7-a0e1-c445645e0050"/></div><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-81f7-a9be-f28032bbbbe6" class=""><strong>核心場景</strong></h2></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8114-b5cb-c3deabea8384" class=""><strong>⚡ 場景一：快速原型開發（自動接受模式）</strong></h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-818f-bc28-f0b3d6ddb42c" class=""><strong>真實案例：</strong> 產品團隊用&quot;自動接受模式&quot;讓 AI 自主構建 Vim 模式，70% 程式碼由 AI 完成。</p></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81d9-9b17-c93987b474d1" class=""><strong>在 HappyCapy 中如何做：</strong></h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8158-8d9c-e12705c1fc3c" class=""><strong>1. 確保從乾淨的 Git 狀態開始</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3126ea04-9986-81e3-a17a-cbeaf62d19c6" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">git status  # 確認沒有未提交的更改
+git checkout -b feature/new-prototype</code></pre></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8177-b27f-fcb76481e600" class=""><strong>2. 給出詳細但抽象的任務</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3126ea04-9986-8120-b1c7-e015f94e2ac0" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">&quot;請幫我實現一個使用者認證系統：
+- 支援郵箱 + 密碼登入
+- JWT token 認證
+- 包含註冊、登入、密碼重置
+- 寫好單元測試
+- 邊做邊執行測試，遇到錯誤自己修復&quot;</code></pre></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-814b-8da2-fa9b1da10164" class=""><strong>3. 定期檢查進度，80% 完成時接管</strong></p></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81c6-a566-e09c662e57e4" class="bulleted-list"><li style="list-style-type:disc">HappyCapy 自動執行測試、修復錯誤</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-812a-84d3-ddc1b7482d06" class="bulleted-list"><li style="list-style-type:disc">你專注於核心業務邏輯的最後 20%</li></ul></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81a7-b77b-d562b07f3f76" class=""><strong>最佳實踐：</strong></h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81cf-b104-fb7b3150a5ea" class="bulleted-list"><li style="list-style-type:disc">✅ 適合：邊緣功能、實驗性原型、不熟悉的技術棧</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8107-8239-c88edb867acb" class="bulleted-list"><li style="list-style-type:disc">❌ 不適合：核心業務邏輯、安全關鍵程式碼</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-810f-8656-f1f2a70c1c2b" class="bulleted-list"><li style="list-style-type:disc">💾 每個階段都提交 Git 檢查點，方便回滾</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8105-945b-f915dc870709"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8156-857f-d3920c152319" class=""><strong>🐛 場景二：複雜問題調試</strong></h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8179-a1f2-e86baf7ce3cc" class=""><strong>真實案例：</strong> 安全團隊將事故解決時間從 10-15 分鐘縮短到 5 分鐘。</p></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81f2-8c65-f5a6b7f345b3" class=""><strong>在 HappyCapy 中如何做：</strong></h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3126ea04-9986-81f2-a1af-d5cab35d5136" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">&quot;這是我遇到的錯誤：
+[粘貼堆棧跟蹤]
+
+這是相關檔案：
+[上傳或粘貼檔案]
+
+請幫我：
+1. 追蹤控制流，找出問題根源
+2. 解釋為什麼會出現這個錯誤
+3. 給出修復方案，並說明可能的副作用&quot;</code></pre></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81dc-b4f8-d8351ea632a8" class=""><strong>HappyCapy 的優勢：</strong></h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81c8-8ba3-d04c22005d37" class="bulleted-list"><li style="list-style-type:disc">🔍 自動讀取相關程式碼檔案</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81bf-b4c7-e160f23e4460" class="bulleted-list"><li style="list-style-type:disc">🧠 理解複雜的呼叫棧</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8180-9829-c9a3a29ebfad" class="bulleted-list"><li style="list-style-type:disc">🛠️ 提供可直接執行的修復程式碼</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81d6-a8a2-c39a9ef92db7" class="bulleted-list"><li style="list-style-type:disc">📝 生成 Runbook 供下次參考</li></ul></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8152-ad00-ef83d00ed67b" class=""><strong>時間節省：50%</strong></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81a5-92e7-d2e5e3355cd1"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8126-864f-c66d04f3fbb1" class=""><strong>🧪 場景三：測試驅動開發（TDD）</strong></h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81db-b919-e94b99c181a0" class=""><strong>真實案例：</strong> 推理團隊通過 AI 生成全面的單元測試，自動覆蓋邊界情況。</p></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81f7-acf8-f71c6bdb1e0f" class=""><strong>在 HappyCapy 中如何做：</strong></h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3126ea04-9986-81da-a990-fa5ae117c184" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">&quot;我要實現一個 `calculateDiscount(price, userType)` 函數。
+
+先請幫我寫測試用例，考慮：
+- 正常情況（普通使用者、VIP 使用者）
+- 邊界情況（價格為 0、負數、超大金額）
+- 異常情況（無效使用者類型、缺少參數）
+
+然後再寫實現程式碼，確保所有測試通過。&quot;</code></pre></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8177-8e05-d391be45890f" class=""><strong>工作流：</strong></h3></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-819d-96b1-f812a473f1fc" class="numbered-list" start="1"><li>HappyCapy 先寫測試（TDD 紅燈）</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-8156-bcf0-ca05a80b9df7" class="numbered-list" start="2"><li>然後寫實現（TDD 綠燈）</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-8125-9917-fe724ba2fee7" class="numbered-list" start="3"><li>自動執行測試，發現問題自動修復</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3126ea04-9986-81f1-a1a7-f3467d2e587f" class="numbered-list" start="4"><li>你審查程式碼，做最終優化</li></ol></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8174-a47c-cce34a537649" class=""><strong>效果：</strong></h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8102-9d43-ed22494cebd8" class="bulleted-list"><li style="list-style-type:disc">✅ 測試覆蓋更全面</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8168-973e-c94b088fb119" class="bulleted-list"><li style="list-style-type:disc">✅ 減少遺漏邊界情況</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81a1-a8ef-dabdd9f51e8d" class="bulleted-list"><li style="list-style-type:disc">✅ 程式碼質量更高</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-8181-8828-da1f6af5afa7"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8188-b772-ca07b67c91ae" class=""><strong>📚 場景四：快速理解陌生程式碼庫</strong></h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8113-ae2a-cb1aab4f288b" class=""><strong>真實案例：</strong> API 團隊把程式碼庫探索作為&quot;第一站&quot;，大幅減少上下文收集時間。</p></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81ca-9e88-c3ca0ec91cec" class=""><strong>在 HappyCapy 中如何做：</strong></h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3126ea04-9986-81aa-8d59-c6d24ef0bded" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">&quot;我需要修復使用者登入的一個 bug，但不熟悉這部分程式碼。
+
+請幫我：
+1. 找出處理使用者登入的所有相關檔案
+2. 解釋登入流程的主要步驟
+3. 識別哪些檔案負責認證、會話管理、錯誤處理
+4. 告訴我如果要修改登入邏輯，需要改哪些檔案&quot;</code></pre></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-814a-9c50-ca178113e29b" class=""><strong>HappyCapy 會：</strong></h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8151-946f-e05809df3aa9" class="bulleted-list"><li style="list-style-type:disc">🗺️ 生成程式碼庫架構圖</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8135-bcf3-e73e13eee41a" class="bulleted-list"><li style="list-style-type:disc">🔗 展示檔案之間的依賴關係</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81ec-b5af-e3f17624e1e0" class="bulleted-list"><li style="list-style-type:disc">📖 用簡單語言解釋複雜邏輯</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-814f-b6dc-ff0df2759adf" class="bulleted-list"><li style="list-style-type:disc">🎯 直接定位到關鍵程式碼行（<code>file.ts:123</code>）</li></ul></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8105-85c5-e55bc40b6f02" class=""><strong>時間節省：從數小時 → 幾分鐘</strong></p></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81fe-a5ec-ff60b09b57be"/></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-816f-b681-d4f5cfe4f5fc" class=""><strong>🔒 場景五：安全審查與基礎設施變更</strong></h3></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-8104-ab99-cbc2da3825fd" class=""><strong>真實案例：</strong> 安全團隊通過 AI 快速審查 Terraform 計劃。</p></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8195-8dc6-ccc9ed6a6f64" class=""><strong>在 HappyCapy 中如何做：</strong></h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3126ea04-9986-8139-9bf1-e1cb24a07318" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all"># 生成 Terraform 計劃
+terraform plan -out=tfplan
+terraform show -json tfplan &gt; plan.json
+
+# 上傳到 HappyCapy 並詢問
+&quot;審查這個 Terraform 計劃，告訴我：
+1. 會建立/修改/刪除哪些資源？
+2. 有沒有安全風險？
+3. 有沒有可能導致停機的操作？
+4. 我會後悔嗎？😅&quot;</code></pre></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-815d-884d-d7792ad13fc3" class=""><strong>HappyCapy 協助你：</strong></h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8122-8ab1-da6986b9171c" class="bulleted-list"><li style="list-style-type:disc">⚠️ 識別高風險操作（刪除資料庫、修改防火牆規則）</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81e7-b5cd-f39b159f4371" class="bulleted-list"><li style="list-style-type:disc">🔍 檢查權限設定是否符合最佳實踐</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81c6-ae27-dee049a8522f" class="bulleted-list"><li style="list-style-type:disc">📋 生成審查清單</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8126-8246-d2e5fe399a3c" class="bulleted-list"><li style="list-style-type:disc">💡 建議更安全的替代方案</li></ul></div><div style="display:contents" dir="auto"><hr id="3126ea04-9986-81b9-9fee-dfe1a17b11ad"/></div><div style="display:contents" dir="auto"><h2 id="3126ea04-9986-813e-a959-e93923c28720" class=""><strong>💡 給開發者的建議</strong></h2></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-812e-9258-d64aaa8f84b4" class=""><strong>1. 建立自驗證循環</strong></h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3126ea04-9986-8135-9bc0-c57589cf904f" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">&quot;在實現這個功能時：
+- 寫完程式碼後自動執行測試
+- 執行 lint 檢查程式碼風格
+- 如果測試失敗，自己分析原因並修復
+- 最後給我一份測試通過的程式碼&quot;</code></pre></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8141-b7a2-d91d2d7cfe78" class=""><strong>2. 培養任務分類直覺</strong></h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-813c-9e67-fca5e55f736e" class="bulleted-list"><li style="list-style-type:disc"><strong>異步自主</strong>：邊緣功能、原型、不熟悉的技術</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8160-b6b8-dc9a282fd5c3" class="bulleted-list"><li style="list-style-type:disc"><strong>同步監督</strong>：核心業務邏輯、安全關鍵、生產環境</li></ul></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-8138-a297-d6b5bcc1949d" class=""><strong>3. 寫清晰詳細的提示</strong></h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8154-bac5-d1769f3f2d50" class="bulleted-list"><li style="list-style-type:disc">當程式碼庫有相似命名時，給出明確的檔案路徑</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8144-a4b3-dcd2f5b73cc0" class="bulleted-list"><li style="list-style-type:disc">說明你的編碼風格偏好（如&quot;用函數式編程，避免類&quot;）</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81ff-981d-dbf44d157d5b" class="bulleted-list"><li style="list-style-type:disc">提供上下文（如&quot;這個項目用 TypeScript + React + Zustand&quot;）</li></ul></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-81da-8297-dab56af238ad" class=""><strong>4. 利用多實例並行工作</strong></h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81a7-9b1a-f4bd8c66477c" class="bulleted-list"><li style="list-style-type:disc">HappyCapy 支援多個標籤頁，每個標籤頁是獨立會話</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81b3-88af-f104f31c3eb7" class="bulleted-list"><li style="list-style-type:disc">一個標籤頁處理前端，另一個處理後端</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8135-8afe-ecd0309d9b96" class="bulleted-list"><li style="list-style-type:disc">每個會話保持完整上下文，切換無壓力</li></ul></div><div style="display:contents" dir="auto"><h3 id="3126ea04-9986-814a-a17a-c00a2a1e3c43" class=""><strong>5. 像用&quot;老虎機&quot;一樣對待重構任務</strong></h3></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8103-affd-e6fdc95cee20" class="bulleted-list"><li style="list-style-type:disc">提交當前狀態（<code>git commit</code>）</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-8176-9034-e7a092b9f19b" class="bulleted-list"><li style="list-style-type:disc">讓 HappyCapy 自主工作 30 分鐘</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81d9-945d-e3f317fe9861" class="bulleted-list"><li style="list-style-type:disc">如果結果滿意就接受，不滿意就重新開始（<code>git reset --hard</code>）</li></ul></div><div style="display:contents" dir="auto"><ul id="3126ea04-9986-81e8-b849-c3204edab4ee" class="bulleted-list"><li style="list-style-type:disc">重新開始往往比糾正錯誤成功率更高</li></ul></div><div style="display:contents" dir="auto"><p id="3126ea04-9986-81b3-bae1-c5b32a1978ee" class="block-color-default">🦫 <mark class="highlight-default"><strong>HappyCapy 官方網站：</strong></mark><mark class="highlight-default"><strong><a href="https://happycapy.ai/">https://happycapy.ai/</a></strong></mark> 在這裡，你可以看看機智可愛的 HappyCapy 如何成為你的 AI 夥伴，一起探索更多可能。✨</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
+<style>
+#lang-toggle-select {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
+  color: #24292f;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+#lang-toggle-select:hover {
+  background: #f6f8fa;
+}
+</style>
+<script>
+(function () {
+  var KEY = 'site_lang_pref';
+  var pref = localStorage.getItem(KEY);
+  if (!pref) {
+    pref = 'en';
+    localStorage.setItem(KEY, pref);
+  }
+
+  function toEn(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
+    return pathname.replace(/\.html$/i, '_en.html');
+  }
+
+  function toZh(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
+  }
+
+  var rawPath = decodeURI(window.location.pathname || '');
+  var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
+
+  if (pref === 'en' && !isEn) {
+    var enPath = toEn(rawPath);
+    if (enPath !== rawPath) {
+      window.location.replace(encodeURI(enPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh' && !isZh) {
+    var zhPath = toZh(rawPath);
+    if (zhPath !== rawPath) {
+      window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
+    var currentPath = decodeURI(window.location.pathname || '');
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
+    localStorage.setItem(KEY, targetLang);
+    window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.appendChild(select);
+  });
+})();
+</script>
+<!-- LANG_TOGGLE_END --></body></html>

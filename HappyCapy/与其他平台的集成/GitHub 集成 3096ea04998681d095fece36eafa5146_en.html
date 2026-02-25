@@ -1,0 +1,867 @@
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>GitHub Integration</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article class="page sans" id="3096ea04-9986-81d0-95fe-ce36eafa5146"><header><div class="page-header-icon undefined"><span class="icon">🐙</span></div><!-- BREADCRUMB_START -->
+<style>
+.hc-breadcrumb {
+  font-size: 14px;
+  margin-bottom: 0.75em;
+}
+.hc-breadcrumb-sep {
+  margin: 0 0.35em;
+  opacity: 0.6;
+}
+</style>
+<nav class="hc-breadcrumb" aria-label="Breadcrumb">
+  <a href="../../HappyCapy%203096ea04998680d3ba0ef82161f9c1ce_en.html">Home</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <a href="../%E4%B8%8E%E5%85%B6%E4%BB%96%E5%B9%B3%E5%8F%B0%E7%9A%84%E9%9B%86%E6%88%90%203096ea04998680d3b4d2f992b732da62_en.html">Integration with other platforms</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <span aria-current="page">GitHub Integration</span>
+</nav>
+<!-- BREADCRUMB_END -->
+
+
+
+<h1 class="page-title" dir="auto">GitHub Integration</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div dir="auto" style="display:contents"><h1 class="" id="3096ea04-9986-812f-9cba-e773d31ebce7">GitHub Integration</h1></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-811f-b645-f7694a95cad7"><strong>HappyCapy Official website express train:</strong>https://happycapy.ai/ Here, you can see how the witty and cute HappyCapy can become your AI partner and explore infinite possibilities together!</p></div><div dir="auto" style="display:contents"><hr id="3096ea04-9986-8174-8652-d9a5850dec25"/></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81f4-826d-eea1026e1b23">After connecting to GitHub, HappyCapy can help you manage the code repository, create and view Issues, process Pull Requests, view CI/CD status, etc. The best part is, you just tell HappyCapy what you want to do using natural language!</p></div><div dir="auto" style="display:contents"><h2 class="" id="3096ea04-9986-81e7-ab63-f0e06e6567d3">📝 Get GitHub Token</h2></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81dd-befe-eec5e8b5cdfb">Token is like a key that allows HappyCapy to operate GitHub on your behalf. Getting it is simple:</p></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-81ae-98ad-eaf94b00a612">Step 1: Open GitHub Token settings</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81f4-a659-c190a787ad8f">Visit: https://github.com/settings/tokens</p></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-814f-91a5-cc964f47b997">Or: On the GitHub page → avatar in the upper right corner → Settings → bottom left Developer Settings → Personal access tokens → Tokens (classic)</p></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-8188-b722-e57d81dece4e">Step 2: Generate new Token</h3></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-81cc-9f13-c0e3f4776cd2" start="1" type="1"><li>Click "Generate new token" → select "Generate new token (classic)"</li></ol></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-815f-8cbe-ce07eacb47b6" start="2" type="1"><li>Fill in Note (remarks), write whatever you want, such as "HappyCapy"</li></ol></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-818e-a65d-ce4c2a8bb7be" start="3" type="1"><li>It is recommended to select "No expiration" for Expiration.</li></ol></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-81a3-9ac8-dd4d3a20bc95" start="4" type="1"><li>Select scopes:</li></ol></div><div dir="ltr" style="display:contents"><figure class="callout" id="3096ea04-9986-819b-afca-f739896ef593" style="white-space:pre-wrap;display:flex"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">💡 Recommended by beginners: If you are using it yourself, you can check all the permissions, so you don’t have to worry! If you want fine control, at least check: repo (code repository), workflow (GitHub Actions), read:org (read organization)</div></figure></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-8102-96ed-ff06cc886528">Click the "Generate token" button at the bottom of the page to generate a string of<code>ghp_</code>the beginning of the string.</p></div><div dir="ltr" style="display:contents"><figure class="block-color-yellow_background callout" id="3096ea04-9986-811a-a10c-fa9cffadedc1" style="white-space:pre-wrap;display:flex"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">⚠️Important: Token is only displayed once! Please copy it immediately and save it in a safe place (such as a password manager). Once you close the page you can no longer see it.</div></figure></div><div dir="auto" style="display:contents"><hr id="3096ea04-9986-8194-ae18-f49e6fed743b"/></div><div dir="auto" style="display:contents"><h2 class="" id="3096ea04-9986-8146-af4b-dc49eace56dd">🚀 How to use (super simple)</h2></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81f1-8410-ea1f05ff0567">HappyCapy The biggest advantage is: you don’t need to remember any commands, just speak them in natural language!</p></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-819d-821c-e25fc715e61e">Scenario 1: Create a new warehouse</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-8107-8a9f-ff007c106e4a">All you need to say is this:</p></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="3096ea04-9986-81e1-a196-c65eae9b8f42"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">帮我创建一个 GitHub 仓库，名字叫 my-project
+
+我的 GitHub 账号：https://github.com/你的用户名
+Token：ghp_你的token</code></pre></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81d9-b831-ea2148506f0a">HappyCapy will automatically create a warehouse for you and set up basic information.</p></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-8185-86d1-d4c9891576e7">Scenario 2: Organize conversations and submit to repository</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-8111-aeba-d37c3b651561">This is the most commonly used scenario! For example, you and HappyCapy wrote a piece of code and want to save it to GitHub:</p></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="3096ea04-9986-8146-853d-dcf72f71f7d3"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">帮我把这次对话整理成文档，并提交到我的 GitHub 仓库
+
+仓库：https://github.com/你的用户名/my-project
+Token：ghp_你的token</code></pre></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81a4-a3f1-d8daf3f1fdc6">HappyCapy will:</p></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-81bb-8b72-efd449f852d8" start="1" type="1"><li>Organize conversations</li></ol></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-81ea-8725-d7a356560b16" start="2" type="1"><li>Generate appropriate file structure</li></ol></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-8136-9687-eeea1dc96f66" start="3" type="1"><li>Submit code to GitHub</li></ol></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-81bf-9f26-eadd4ac34681" start="4" type="1"><li>Give you a return warehouse link</li></ol></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-81e1-9b63-ee087e9a818c">Scenario 3: View and manage Issues</h3></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="3096ea04-9986-8119-bcca-d24b2aaaf2a8"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">帮我看看 my-project 仓库有哪些 Issue
+
+仓库：https://github.com/你的用户名/my-project
+Token：ghp_你的token</code></pre></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-8133-97e5-eabf07bf91d6">Or create a new Issue:</p></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="3096ea04-9986-8187-a496-cfd032da74d5"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">帮我在 my-project 仓库创建一个 Issue
+标题：修复登录按钮 bug
+内容：用户点击登录按钮时没有反应
+
+Token：ghp_你的token</code></pre></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-8105-8073-f0c44dc0f749">Scenario 4: View Pull Request</h3></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="3096ea04-9986-81c7-89b1-eab1568b254c"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">帮我看看 my-project 有哪些待审核的 PR
+
+Token：ghp_你的token</code></pre></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-813f-a0bc-cc052e73b4ef">Scenario 5: Check CI/CD status</h3></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="3096ea04-9986-814c-a20d-d79c702f195e"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">帮我检查一下 my-project 的最新 workflow 运行状态
+
+Token：ghp_你的token</code></pre></div><div dir="auto" style="display:contents"><hr id="3096ea04-9986-81c9-a92e-df3a588b740e"/></div><div dir="auto" style="display:contents"><h2 class="" id="3096ea04-9986-8105-bb21-ebc1da09ea98">💡 Tips for use</h2></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-8126-9219-d54e77cb2972">1. Token only needs to be provided once</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81fc-8cef-eaa1c797bff9">In the same conversation, after providing the Token for the first time, there is no need to provide it again for subsequent operations. HappyCapy will remember your Token.</p></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-81cd-bdc2-d4496aa85dfa">2. You can abbreviate the warehouse name</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-815f-8958-fe5adeb6e010">If it is your own warehouse, you can just say the warehouse name instead of writing the full URL every time:</p></div><div dir="auto" style="display:contents"><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="3096ea04-9986-8126-b642-c8fa89650290"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">"帮我看看 my-project 的 Issue"
+
+而不是：
+"帮我看看 https://github.com/username/my-project 的 Issue"</code></pre></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-8135-9d4e-ead26c8472a2">3. The magic of natural language</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-815a-8c7e-f2855e6ab83e">HappyCapy understands natural language so you can:</p></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-8108-8312-cfe28a785692"><li style="list-style-type:disc">"Help me see recent commit records"</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-8191-afe6-ee010dfe982b"><li style="list-style-type:disc">"Create a README file and submit it"</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-81c6-b230-c9fcf6f82ace"><li style="list-style-type:disc">"Check whether the test passed"</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-81d0-968d-f5d31c26f22d"><li style="list-style-type:disc">"Submit the code for this feature to a new branch"</li></ul></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81b2-9051-ffeb1e2db1fa">No need to remember commands, just like chatting with friends!</p></div><div dir="auto" style="display:contents"><hr id="3096ea04-9986-8114-88f6-e400922eee3e"/></div><div dir="auto" style="display:contents"><h2 class="" id="3096ea04-9986-81ce-a10d-c31e9862c600">❓ FAQ</h2></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-81f0-9381-ef5ebf953d2c">Are Tokens safe?</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-8147-b886-d893a3afd3a8">The token is only used within your session and will not be stored or shared with others. suggestion:</p></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-81cf-8cea-c9b68df10e0c"><li style="list-style-type:disc">Replace Token regularly (for example, every 3 months)</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-812b-aa85-ff77d075942c"><li style="list-style-type:disc">Do not share tokens in public</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-81ed-a197-e3de933c800c"><li style="list-style-type:disc">If leakage is suspected, immediately delete the old Token in GitHub and generate a new one</li></ul></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-81d7-9d36-edc9ffed11e2">What should I do if I lose my Token?</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-8188-bfd6-e767db9c421f">It doesn't matter! If Token is lost, you can:</p></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-812e-b03a-dd4667d806ab" start="1" type="1"><li>Return to GitHub Token settings page</li></ol></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-8187-9a1b-f12955d1000f" start="2" type="1"><li>Delete old token</li></ol></div><div dir="auto" style="display:contents"><ol class="numbered-list" id="3096ea04-9986-8103-9856-ced29f1db528" start="3" type="1"><li>Regenerate a new one</li></ol></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-819a-80ff-c56e3413190e">It's that simple!</p></div><div dir="auto" style="display:contents"><h3 class="" id="3096ea04-9986-8159-8211-c6bdcb551ef8">HappyCapy What can you do for me?</h3></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-8121-8d21-e836c08146b5">Basically all GitHub operations work:</p></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-8146-8c1e-feeb832bfdef"><li style="list-style-type:disc">✅ Create/delete warehouse</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-819c-9794-eb6da3df1fb4"><li style="list-style-type:disc">✅ Submit code and create branches</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-8114-855f-d2ffd4d90944"><li style="list-style-type:disc">✅ Manage Issues and PRs</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-81e6-b8d7-ff67867f1cbe"><li style="list-style-type:disc">✅ View submission history</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-81c5-a623-d3c5b5638d97"><li style="list-style-type:disc">✅ Check CI/CD status</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3096ea04-9986-8185-b8d5-cdc092603e31"><li style="list-style-type:disc">✅ Manage warehouse settings</li></ul></div><div dir="auto" style="display:contents"><p class="" id="3096ea04-9986-81d2-9094-d27c1e7cbbea">As long as you can think of it, HappyCapy can help you do it!</p></div><div dir="auto" style="display:contents"><hr id="3096ea04-9986-81c7-8340-c292a8e4c5ca"/></div><div dir="ltr" style="display:contents"><figure class="callout" id="3096ea04-9986-811e-b662-f35acb0cc76c" style="white-space:pre-wrap;display:flex"><div style="font-size:1.5em"><span class="icon">💬</span></div><div style="width:100%">💬 Still have questions? Check<strong>FAQ</strong>page or<strong>Contact us</strong>！</div></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
+<style>
+#lang-toggle-select {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
+  color: #24292f;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+#lang-toggle-select:hover {
+  background: #f6f8fa;
+}
+</style>
+<script>
+(function () {
+  var KEY = 'site_lang_pref';
+  var pref = localStorage.getItem(KEY);
+  if (!pref) {
+    pref = 'en';
+    localStorage.setItem(KEY, pref);
+  }
+
+  function toEn(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
+    return pathname.replace(/\.html$/i, '_en.html');
+  }
+
+  function toZh(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
+  }
+
+  var rawPath = decodeURI(window.location.pathname || '');
+  var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
+
+  if (pref === 'en' && !isEn) {
+    var enPath = toEn(rawPath);
+    if (enPath !== rawPath) {
+      window.location.replace(encodeURI(enPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh' && !isZh) {
+    var zhPath = toZh(rawPath);
+    if (zhPath !== rawPath) {
+      window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
+    var currentPath = decodeURI(window.location.pathname || '');
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
+    localStorage.setItem(KEY, targetLang);
+    window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.appendChild(select);
+  });
+})();
+</script>
+<!-- LANG_TOGGLE_END --></body></html>

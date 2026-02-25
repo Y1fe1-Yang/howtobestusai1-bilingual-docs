@@ -28,7 +28,7 @@ jobs:
         run: |
           mkdir -p public
           find . -maxdepth 1 -type f -name "*.html" -exec cp {} public/ \;
-          cp -r "WaytoAGI x Happycapy" public/
+          cp -r "HappyCapy" public/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

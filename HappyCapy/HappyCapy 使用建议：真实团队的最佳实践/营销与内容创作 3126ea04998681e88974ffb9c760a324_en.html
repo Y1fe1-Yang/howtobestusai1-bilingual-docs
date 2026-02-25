@@ -1,0 +1,847 @@
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>Marketing and content creation</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article class="page sans" id="3126ea04-9986-81e8-8974-ffb9c760a324"><header><img class="page-cover-image" src="%E8%90%A5%E9%94%80%E4%B8%8E%E5%86%85%E5%AE%B9%E5%88%9B%E4%BD%9C/v3-04-marketing.png" style="object-position:center 46.96%"/><!-- BREADCRUMB_START -->
+<style>
+.hc-breadcrumb {
+  font-size: 14px;
+  margin-bottom: 0.75em;
+}
+.hc-breadcrumb-sep {
+  margin: 0 0.35em;
+  opacity: 0.6;
+}
+</style>
+<nav class="hc-breadcrumb" aria-label="Breadcrumb">
+  <a href="../../HappyCapy%203096ea04998680d3ba0ef82161f9c1ce_en.html">Home</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <a href="../HappyCapy%20%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE%EF%BC%9A%E7%9C%9F%E5%AE%9E%E5%9B%A2%E9%98%9F%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%203126ea04998680ddb840dfae4e413585_en.html">HappyCapy Usage Tips: Best Practices from Real Teams</a>
+  <span class="hc-breadcrumb-sep">/</span>
+  <span aria-current="page">Marketing and content creation</span>
+</nav>
+<!-- BREADCRUMB_END -->
+
+
+
+<h1 class="page-title" dir="auto">Marketing and content creation</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div dir="auto" style="display:contents"><h2 class="" id="3126ea04-9986-810b-ac3e-e0ee9d97e3e2">Applicable people</h2></div><div dir="auto" style="display:contents"><p class="" id="3126ea04-9986-814d-b917-c382540fbfa9">Growth marketing, content marketing, social media operations, advertising specialist</p></div><div dir="auto" style="display:contents"><hr id="3126ea04-9986-8162-afb8-c5e752ccbdb4"/></div><div dir="auto" style="display:contents"><h2 class="" id="3126ea04-9986-817c-8cee-c4dba796cd31">core scene</h2></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-810c-8480-fb7c02e23eae">📢 Scenario 1: Batch generation of ad copy variations</h3></div><div dir="auto" style="display:contents"><p class="" id="3126ea04-9986-818b-bbd6-fb40af539d30"><mark class="highlight-default"><strong>Real case: Growth team generated hundreds of ad variations in 15 minutes, increasing creative output 10x.</strong></mark></p></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-8184-8203-f43e73463547">How to do it in HappyCapy:</h3></div><div dir="auto" style="display:contents"><blockquote class="" id="3126ea04-9986-819c-84b1-ed3e832109af">"Generate 50 Google Ads ad variations for me:<br/><br/>Product:HappyCapy - AI Native Computer<br/>Target audience: small and medium business owners, freelancers<br/>Core selling points:<br/>- Zero technical threshold<br/>- Improve work efficiency 3 times<br/>- Runs in the cloud and can also be used on mobile phones<br/>- Generate images, process documents, and automate workflows<br/><br/>Format requirements:<br/>- Title 1:30 characters or less<br/>- Title 2:30 characters or less<br/>- Description: within 90 characters<br/><br/>Creative direction:<br/>- 20 highlighted "time savers"<br/>- 20 outstanding "zero thresholds"<br/>- 10 outstanding "value for money"<br/><br/>The output is in CSV format, including columns: title 1, title 2, description, creative grouping"</blockquote></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-816e-baba-d5f7c8aed532">HappyCapy will:</h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-81f3-88d3-c66ed6811c16"><li style="list-style-type:disc">Generate copy that meets character limits</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8176-a17f-c71007aea559"><li style="list-style-type:disc">Automatic classification and tagging</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8130-b846-ccf179364c35"><li style="list-style-type:disc">Output a CSV that can be imported directly into Google Ads</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8142-b758-de99f63aa72b"><li style="list-style-type:disc">Provide A/B testing recommendations</li></ul></div><div dir="auto" style="display:contents"><p class="" id="3126ea04-9986-8114-a1aa-db086e7c0369"><mark class="highlight-default"><strong>Time savings: from 2 hours → 15 minutes</strong></mark></p></div><div dir="auto" style="display:contents"><hr id="3126ea04-9986-814f-a7d3-f66beefc6b8f"/></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-81d0-8e49-f0bf079e93f1">🎨 Scenario 2: Batch creation of visual materials</h3></div><div dir="auto" style="display:contents"><p class="" id="3126ea04-9986-8196-b51e-f3e77ca5a644"><mark class="highlight-default"><strong>Real case: The marketing team develops a Figma plug-in that generates 100 ad variations in half a second per batch.</strong></mark></p></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-81d4-8b54-cec244af40e5">How to do it in HappyCapy:</h3></div><div dir="auto" style="display:contents"><blockquote class="" id="3126ea04-9986-812e-bfe2-f94da0300596">"Help me create 20 social media posters:<br/><br/>Topic:HappyCapy Spring Sale<br/>Size: 1080x1080(instagram), 1200x628(facebook)<br/>Style: modern, simple, technological sense<br/><br/>Content variations:<br/>- Posters 1-5: Focus on "Free Trial"<br/>- Posters 6-10: Focus on "Improving efficiency by 3 times"<br/>- Posters 11-15: Focus on "no technical background required"<br/>- Posters 16-20: Feature "Max Plan 50% off"<br/><br/>Each poster requires:<br/>- Eye-catching titles<br/>- short subtitle<br/>- CTA button copywriting<br/>- Suitable color scheme"</blockquote></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-813d-8605-c683fb82ae89">HappyCapy will:</h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8178-88f5-d7127e7a9a48"><li style="list-style-type:disc">Generate posters using AI image generation skills</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8107-ad0d-e92db521e854"><li style="list-style-type:disc">Automatically adjust size to adapt to different platforms</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8199-ad93-e553f29f978c"><li style="list-style-type:disc">Batch output, clear naming</li></ul></div><div dir="auto" style="display:contents"><p class="" id="3126ea04-9986-81ac-9b54-f0ae94e23a37"><mark class="highlight-default"><strong>Creative output: 10x improvement</strong></mark></p></div><div dir="auto" style="display:contents"><hr id="3126ea04-9986-8163-a809-c2e34bbff19d"/></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-8163-8bbd-fe4c62d70a63">📊 Scenario 3: Marketing data analysis and reporting</h3></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-81b7-9e35-e3685c05b0c6">How to do it in HappyCapy:</h3></div><div dir="auto" style="display:contents"><blockquote class="" id="3126ea04-9986-8175-b85c-e7a8d0f2c372">"Analyze my Meta Ads delivery data (meta<em><mark class="highlight-default">ads</mark></em>jan.csv):<br/><br/>1. Identify the top 5 performing ads (sorted by ROAS)<br/>2. Find the worst-performing ads and analyze possible reasons<br/>3. Compare conversion rates across different audience groups<br/>4. Generate a visual report including:<br/>- Overall ROI trend graph<br/>- Comparison bar chart for each ad group<br/>- Audience segmentation funnel chart<br/>- Optimization suggestion list"</blockquote></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-8164-9a4c-eaeedd7b64ca">HappyCapy will:</h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8118-9851-c9a76c660f7a"><li style="list-style-type:disc">Automatically analyze data</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-81e0-a3d1-f9d367277b93"><li style="list-style-type:disc">Generate professional visualizations</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-81c2-b2fc-e930301354ee"><li style="list-style-type:disc">Provide actionable optimization suggestions</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8194-b311-ef925654fac6"><li style="list-style-type:disc">Export PPT or PDF report</li></ul></div><div dir="auto" style="display:contents"><hr id="3126ea04-9986-81ce-befd-c92df982e203"/></div><div dir="auto" style="display:contents"><h2 class="" id="3126ea04-9986-814c-9406-d21af5eb0d69">💡 Advice for marketers</h2></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-81bf-9cb4-e10035c9a7f6">1. Identify repetitive tasks that can be supported by the API</h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8137-a850-cc0c75c53472"><li style="list-style-type:disc">Advertising platforms (Google Ads, Meta Ads) all have APIs</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-811e-8002-de762bec2dfa"><li style="list-style-type:disc">Design tools (Figma, Canva) have APIs</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8174-9d0c-e5f2762902dc"><li style="list-style-type:disc">The analytics platform (Google Analytics) has an API</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8130-be84-c9aefb852d08"><li style="list-style-type:disc">These are good candidates for automation</li></ul></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-8123-91bc-eeaa6ec0675e">2. Split into specialized subtasks</h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8181-ba10-dca4de186bf9"><li style="list-style-type:disc">Don't ask for "Generate 100 complete campaigns" all at once</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8197-953b-d2a6e8ef0d65"><li style="list-style-type:disc">Split into:</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8146-9c37-efcc110a4f19"><li style="list-style-type:disc">Task 1: Generate title variations</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-811c-bfe8-e4c8fda217df"><li style="list-style-type:disc">Task 2: Generate description variants</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8160-a8d7-e8885bbf3500"><li style="list-style-type:disc">Task 3: Combine and format output</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-81c2-9a30-da19789c8841"><li style="list-style-type:disc">Easier to debug and optimize</li></ul></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-8132-a2b2-c229330d70a6">3. Brainstorm thoroughly before coding</h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-81d6-9c39-e7f9cc98528d"><li style="list-style-type:disc">First plan the complete workflow in HappyCapy</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8158-9f22-ee52543bb906"><li style="list-style-type:disc">Then execute the implementation</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8156-bcf0-fe7957135b5d"><li style="list-style-type:disc">Implement it step by step, don’t ask for a one-time solution</li></ul></div><div dir="auto" style="display:contents"><h3 class="" id="3126ea04-9986-81b5-bf64-efa77eb85736">4. Establish memory system to learn across iterations</h3></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-8168-9ff9-f8ca824d3b8c"><li style="list-style-type:disc">Record the results of each A/B test</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-817d-bc5a-d3dee2d3e88c"><li style="list-style-type:disc">Next time you generate copy, tell HappyCapy: "The last test found that 'free trial' has a 25% higher conversion rate than 'limited time offer'. This time we will generate more variations in a similar direction."</li></ul></div><div dir="auto" style="display:contents"><ul class="bulleted-list" id="3126ea04-9986-813f-87dd-ca1393cdbbdb"><li style="list-style-type:disc">Let AI learn from your data</li></ul></div><div dir="auto" style="display:contents"><hr id="3126ea04-9986-81f9-a203-e2ca78ded4bf"/></div><div dir="auto" style="display:contents"><hr id="3126ea04-9986-81de-b720-ee8c0a519f0f"/></div><div dir="auto" style="display:contents"><p class="block-color-default" id="3126ea04-9986-8184-908a-e82c71279a8e">🦫 <mark class="highlight-default"><strong>HappyCapy Official website express train:</strong></mark><mark class="highlight-default"><strong><a href="https://happycapy.ai/">https://happycapy.ai/</a></strong></mark>Here, you can see how the cute and witty HappyCapy can become your AI partner and explore infinite possibilities together! ✨</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
+<style>
+#lang-toggle-select {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  border: 1px solid #d0d7de;
+  background: #ffffff;
+  color: #24292f;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+#lang-toggle-select:hover {
+  background: #f6f8fa;
+}
+</style>
+<script>
+(function () {
+  var KEY = 'site_lang_pref';
+  var pref = localStorage.getItem(KEY);
+  if (!pref) {
+    pref = 'en';
+    localStorage.setItem(KEY, pref);
+  }
+
+  function toEn(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
+    return pathname.replace(/\.html$/i, '_en.html');
+  }
+
+  function toZh(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+  }
+
+  function toZhTw(pathname) {
+    if (!/\.html$/i.test(pathname)) return pathname;
+    if (/_tw\.html$/i.test(pathname)) return pathname;
+    if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+    return pathname.replace(/\.html$/i, '_tw.html');
+  }
+
+  var rawPath = decodeURI(window.location.pathname || '');
+  var isEn = /_en\.html$/i.test(rawPath);
+  var isTw = /_tw\.html$/i.test(rawPath);
+  var isZh = !isEn && !isTw;
+
+  if (pref === 'en' && !isEn) {
+    var enPath = toEn(rawPath);
+    if (enPath !== rawPath) {
+      window.location.replace(encodeURI(enPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh' && !isZh) {
+    var zhPath = toZh(rawPath);
+    if (zhPath !== rawPath) {
+      window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  if (pref === 'zh-tw' && !isTw) {
+    var twPath = toZhTw(rawPath);
+    if (twPath !== rawPath) {
+      window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+      return;
+    }
+  }
+
+  var select = document.createElement('select');
+  select.id = 'lang-toggle-select';
+  select.setAttribute('aria-label', 'Language');
+
+  var opts = [
+    { value: 'zh', label: '简体' },
+    { value: 'zh-tw', label: '繁體' },
+    { value: 'en', label: 'EN' }
+  ];
+  opts.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+
+  select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+  select.addEventListener('change', function () {
+    var currentPath = decodeURI(window.location.pathname || '');
+    var targetLang = select.value;
+    var targetPath = currentPath;
+    if (targetLang === 'en') targetPath = toEn(currentPath);
+    if (targetLang === 'zh') targetPath = toZh(currentPath);
+    if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
+    localStorage.setItem(KEY, targetLang);
+    window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.appendChild(select);
+  });
+})();
+</script>
+<!-- LANG_TOGGLE_END --></body></html>
