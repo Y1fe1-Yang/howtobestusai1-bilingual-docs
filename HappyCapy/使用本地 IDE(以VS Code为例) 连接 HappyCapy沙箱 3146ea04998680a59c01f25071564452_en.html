@@ -1,0 +1,860 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Connect HappyCapy Sandbox from Local IDE (VS Code)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3146ea04-9986-80a5-9c01-f25071564452" class="page sans"><header><img class="page-cover-image" src="v3-09-vscode-connection.png" style="object-position:center 43.58%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">💻</span></div><!-- BREADCRUMB_START -->
+<style>
+article.page > header {
+		white-space: normal;
+}
+.hc-breadcrumb {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	font-size: 14px;
+		line-height: 1.35;
+		white-space: normal;
+		margin: 0.2em 0 0.35em;
+}
+.hc-breadcrumb a,
+.hc-breadcrumb span {
+		white-space: normal;
+}
+.hc-breadcrumb-sep {
+	margin: 0 0.35em;
+	opacity: 0.6;
+}
+</style>
+<nav class="hc-breadcrumb" aria-label="Breadcrumb">
+	<a href="../HappyCapy%203096ea04998680d3ba0ef82161f9c1ce_en.html">Home</a>
+	<span class="hc-breadcrumb-sep">/</span>
+	<a href="../HappyCapy%203096ea04998680d3ba0ef82161f9c1ce_en.html">HappyCapy</a>
+	<span class="hc-breadcrumb-sep">/</span>
+	<span aria-current="page">Connect HappyCapy Sandbox from Local IDE (VS Code)</span>
+</nav>
+<!-- BREADCRUMB_END -->
+
+
+
+
+<h1 class="page-title" dir="auto">Connect HappyCapy Sandbox from Local IDE (VS Code)</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="3146ea04-9986-805b-a87c-f6fdb6c589fd" class=""><mark class="highlight-default"><strong>HappyCapy Website: https://happycapy.ai/</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-807f-937c-e1bc0070e5f0"/></div><div style="display:contents" dir="auto"><h2 id="3146ea04-9986-8028-9489-c997b154b575" class="">💡 Use Cases</h2></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-803e-b918-e8fa7f502c5f" class="">In some development scenarios, you may prefer a local IDE:</p></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-804b-87ff-cc521009f800" class="bulleted-list"><li style="list-style-type:disc">Large projects (hundreds of files)</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-80a6-91d4-ce668e68ae50" class="bulleted-list"><li style="list-style-type:disc">Use your existing local development environment</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-80ca-85da-c712d3f29b37" class="bulleted-list"><li style="list-style-type:disc">Need specific paid extensions or enterprise tools</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-80b3-a700-ebdd27ab78dd" class="bulleted-list"><li style="list-style-type:disc">Prefer local IDE shortcuts and workflow</li></ul></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-806f-bca1-fc2ecff9a49e" class=""><mark class="highlight-default"><strong>Good news: with VSCode Remote Tunnels, you can easily connect to the HappyCapy cloud sandbox!</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-8073-a66e-cb3b6a7c9969"/></div><div style="display:contents" dir="auto"><h2 id="3146ea04-9986-804b-8f62-d7656d3cb5e6" class="">✅ Preparation</h2></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-8036-a3ca-f22fa43d35f8" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">HappyCapy account (visit https://happycapy.ai/)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-8017-9484-fc696e10bf3d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Local VSCode 1.70+</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-80e3-b3e8-d8529b57a159" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">GitHub account (for authorization)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-80de-a745-ef601fe311d3" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Internet connection</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-80f0-b99b-c82077b63d33"/></div><div style="display:contents" dir="auto"><h2 id="3146ea04-9986-8064-baa7-d6cb3b29d72d" class="">🚀 Connect in 3 Steps</h2></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-8045-9043-ed4a42786ca4" class="">Step 1️⃣: Start Tunnel in HappyCapy</h3></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-800c-8737-dcea86f272da" class="">In the HappyCapy chat box, enter:<div class="indented"><div style="display:contents" dir="auto"><p id="3146ea04-9986-8040-bb2f-d57343bb42c5" class=""><mark class="highlight-gray_background"><code>Please start VSCode Remote Tunnel (global mode) --name happycapy, and show the GitHub verification link and code</code></mark></p></div></div></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-804e-857a-c63b0091756f" class="">HappyCapy will install and start the tunnel automatically, then return:</p></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-801e-a77e-c5b17cace2b5"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="ltr"><figure id="3146ea04-9986-8038-8554-fc38a86b71b2" class="image"><a href="QQ_1772168959539.png"><img style="width:2648px" src="QQ_1772168959539.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-80fa-a6e4-d54d5b5be7d5"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><mark class="highlight-blue_background"><strong>💡 Save these two details:</strong></mark></div></figure></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-800f-8aff-fce35f2332ea" class="bulleted-list"><li style="list-style-type:disc">Authorization page: https://github.com/login/device</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-80ab-aa3a-c52586439f81" class="bulleted-list"><li style="list-style-type:disc">Authorization code: XXXX-XXXX (8 characters)</li></ul></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-8092-989c-f2a36d4bf62e"/></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-801a-9eda-ec390415428d" class="">Step 2️⃣: GitHub Authorization (1 minute)</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-8072-8bf9-f0862f221547" class="numbered-list" start="1"><li>1. Open your browser and visit: https://github.com/login/device</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-8061-a015-c12c3ede9477" class="numbered-list" start="2"><li>2. Enter the authorization code</li></ol></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-80c2-8696-c3d9d54ca581"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="ltr"><figure id="3146ea04-9986-8064-b58b-d44b8890ed61" class="image"><a href="QQ_1772169040336.png"><img style="width:2655px" src="QQ_1772169040336.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-80f7-b566-c9203b5c554b" class="numbered-list" start="1"><li><mark class="highlight-default"><strong>3. Click [Authorize]</strong></mark></li></ol></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-8035-b2ae-de99045a2ec3"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="ltr"><figure id="3146ea04-9986-80e2-ac36-fbfe13ba7199" class="image"><a href="QQ_1772169080158.png"><img style="width:2658px" src="QQ_1772169080158.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-80a3-8d9d-d649ff07fb93"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><mark class="highlight-teal_background"><strong>✅ Success indicator: browser shows &quot;Success! You may close this page.&quot;</strong></mark></div></figure></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-801c-9a72-e37a80d72b38"/></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-80d2-b8ca-d7c87dd589bb" class="">Step 3️⃣: Connect from Local VSCode</h3></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-80dc-8781-fd79772c7e3b" class="">Install Extension</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-807d-a1bd-ec6e91154319" class="numbered-list" start="1"><li>1. Open local VSCode</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-8031-895c-dd626df6aaf0" class="numbered-list" start="2"><li>2. Press <mark class="highlight-default"><code>Ctrl + Shift + X</code></mark> to open Extensions</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-80fe-9191-e0e95eb9def6" class="numbered-list" start="3"><li>3. Search <mark class="highlight-default"><code>Remote - Tunnels</code></mark> (by Microsoft)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-807b-bd62-ec861b1c962f" class="numbered-list" start="4"><li><mark class="highlight-default"><strong>4. Click Install</strong></mark></li></ol></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-80f4-930e-e7d6a4827618"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="ltr"><figure id="3146ea04-9986-8033-8466-e58188698358" class="image"><a href="QQ_1772169128233.png"><img style="width:2272px" src="QQ_1772169128233.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-8075-8892-c994c3c9df64" class="">Connect Tunnel</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-8075-99d9-c9f6c922105e" class="numbered-list" start="1"><li>Press <mark class="highlight-default"><code>F1</code></mark> to open the Command Palette</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-80ed-b31b-e221a8cd0bce" class="numbered-list" start="2"><li> Enter: <mark class="highlight-default"><code>Remote-Tunnels: Connect to Tunnel</code></mark><mark class="highlight-default"> </mark></li></ol></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-803a-9286-fcfa2a9e4a19"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="ltr"><figure id="3146ea04-9986-80c5-b9f0-c64acc041fb6" class="image"><a href="QQ_1772169175095.png"><img style="width:2660px" src="QQ_1772169175095.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8009-9ffa-e26ce1c2bf1a" class="">3. Sign in to GitHub (first time only)</p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-805b-bc47-e8aa050fa7d1" class="">4. Select <mark class="highlight-default"><code>happycapy</code></mark></p></div><div style="display:contents" dir="ltr"><figure id="3146ea04-9986-803a-8f45-c8edeb8f31e2" class="image"><a href="QQ_1772169670448.png"><img style="width:2659px" src="QQ_1772169670448.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-800b-ab63-ca79cdee4c8a" class="">Wait for connection...</p></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-8058-9f56-effa01cd66fa"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><div style="display:contents" dir="ltr"><figure id="3146ea04-9986-80bf-a8cd-d39601fb5de4" class="image"><a href="QQ_1772169718365.png"><img style="width:2662px" src="QQ_1772169718365.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-803b-862e-e7dc5642b100"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><mark class="highlight-teal_background"><strong>🎉 Connected! Bottom-left shows </strong></mark><mark class="highlight-teal"><mark class="highlight-teal_background"><code><strong>&gt;&lt; Remote [happycapy]</strong></code></mark></mark><mark class="highlight-teal_background"><strong> green indicator</strong></mark></div></figure></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-80a0-9be1-de48f2ead234"/></div><div style="display:contents" dir="auto"><h2 id="3146ea04-9986-80f9-9073-ea677b33087c" class="">📂 Start Using</h2></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-80e2-ac98-c16f94c8ea06" class="">Open Remote Folder</h3></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-8091-a3a0-cee2135e52c5" class="numbered-list" start="1"><li><mark class="highlight-default"><strong>1. Click &quot;Open Folder...&quot;</strong></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-80e6-b040-cb45a3efcd80" class="numbered-list" start="2"><li>2. Enter path: <mark class="highlight-default"><code>/home/node</code></mark> or <mark class="highlight-default"><code>/workspace</code></mark></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3146ea04-9986-80aa-a99c-cc8c3b15c644" class="numbered-list" start="3"><li><mark class="highlight-default"><strong>3. Click &quot;Yes, I trust the authors&quot;</strong></mark></li></ol></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-80f3-a7c8-ffdeb746b2f4"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><mark class="highlight-gray_background"><strong>📸 Screenshot: Open Folder</strong></mark><div style="display:contents" dir="ltr"><figure id="3146ea04-9986-80e8-a80a-f1aa647e5d94" class="image"><a href="QQ_1772169810341.png"><img style="width:2660px" src="QQ_1772169810341.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-8035-a168-fea33aa2bf5a" class="">Open Terminal</h3></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8093-a706-c221480650fa" class="">Press <mark class="highlight-default"><code>Ctrl + </code></mark>` to open the remote terminal</p></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-80e7-8cb6-e0e3adc0d628"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><mark class="highlight-gray_background"><strong>📸 Screenshot: Terminal</strong></mark></div></figure></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-80f1-a93c-c793b53f264f"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><mark class="highlight-teal_background"><strong>✅ Verification: run </strong></mark><mark class="highlight-teal_background"><code><strong>pwd</strong></code></mark><mark class="highlight-teal_background"><strong> and </strong></mark><mark class="highlight-teal_background"><code><strong>whoami</strong></code></mark><mark class="highlight-teal_background"><strong> to confirm you are in the cloud sandbox</strong></mark></div></figure></div><div style="display:contents" dir="ltr"><figure id="3146ea04-9986-8077-bfd1-cea09fbb98bd" class="image"><a href="QQ_1772169946762.png"><img style="width:2648px" src="QQ_1772169946762.png"/></a></figure></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-80fc-acf6-dcb2989ec853"/></div><div style="display:contents" dir="auto"><h2 id="3146ea04-9986-8077-83e1-f4cfeaef6916" class="">📚 Quick Reference</h2></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-8000-8bcd-d44b8ea1b9ca" class="">HappyCapy Prompt Cheatsheet</h3></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-80cd-8678-ed4ef1857191" class=""><mark class="highlight-default"><strong>🚀 Start Tunnel</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8059-9ccf-fa45268c4e2b" class=""><mark class="highlight-gray_background"><code>Please start VSCode Remote Tunnel (global mode) --name happycapy, and show the GitHub verification link and code</code></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8012-9a35-d886717bb7b6" class=""><mark class="highlight-default"><strong>🔍 Check Status</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8082-a389-e4c51b42bc06" class=""><mark class="highlight-gray_background"><code>Is the VSCode Tunnel still running?</code></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8035-b25b-e9fadd523982" class=""><mark class="highlight-default"><strong>⏸️ Stop Service</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-80c9-be7a-f07e36d39605" class=""><mark class="highlight-gray_background"><code>Please stop the VSCode Tunnel service</code></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8094-93f4-fca517a080da" class=""><mark class="highlight-default"><strong>🔄 Restart</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-80c8-94f1-cf8ace88af53" class=""><mark class="highlight-gray_background"><code>Please restart VSCode Tunnel</code></mark></p></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-80e8-a6c7-ed47d1150bcd"/></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-80f5-b64e-cd247b60e908" class="">VSCode Shortcuts</h3></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8021-b031-cdb9f2710211" class=""><mark class="highlight-default"><strong>📂 Open Folder</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8070-8ff8-d832e629155a" class=""><mark class="highlight-default"><code>Ctrl + K, then Ctrl + O</code></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8086-91cc-da66629d5c19" class=""><mark class="highlight-default"><strong>💻 Open Terminal</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-803f-b291-e7079f905ca3" class=""><mark class="highlight-default"><code>Ctrl + `</code></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8040-bbbb-c332e8fef82a" class=""><mark class="highlight-default"><strong>🎮 Command Palette</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8021-8bbe-ce82f7103049" class=""><mark class="highlight-default"><code>F1 or Ctrl + Shift + P</code></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-80ae-841b-f90f4715e045" class=""><mark class="highlight-default"><strong>🔍 Quick Open</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-807d-9d09-ebbd220e8493" class=""><mark class="highlight-default"><code>Ctrl + P</code></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-8013-b0f3-e063b20e26e3" class=""><mark class="highlight-default"><strong>🔌 Disconnect</strong></mark></p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-80a3-9668-dee251657030" class="">Click the bottom-left &gt;&lt; Remote indicator</p></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-80f6-8a45-db1e11bc82f3"/></div><div style="display:contents" dir="auto"><h2 id="3146ea04-9986-8028-ba40-e590d4d507f9" class="">❓ FAQ</h2></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-80d9-a066-cb743e5d1d97" class="">Q: Cannot find my tunnel?</h3></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-80ba-ac46-c701d4d8f473" class="bulleted-list"><li style="list-style-type:disc">1. Ask in HappyCapy: “Is the VSCode Tunnel still running?”</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-8071-8c81-c4b599b6b699" class="bulleted-list"><li style="list-style-type:disc">2. If not running, run the start prompt again</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-8005-aa34-c9bdb2807368" class="bulleted-list"><li style="list-style-type:disc">3. Check local internet connection</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-8052-a37c-e94cf9878c30" class="bulleted-list"><li style="list-style-type:disc">4. Re-sign in to GitHub: <mark class="highlight-default"><code>F1</code></mark> → <mark class="highlight-default"><code>Remote-Tunnels: Sign out</code></mark></li></ul></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-8034-9401-d041635c7530" class="">Q: Connection timeout</h3></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-8080-b396-deb6fe12fc77" class="bulleted-list"><li style="list-style-type:disc">1. Check internet connection</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-8048-8f66-c1048ed44ee5" class="bulleted-list"><li style="list-style-type:disc">2. Temporarily disable VPN</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-803a-aaf8-d3af83624204" class="bulleted-list"><li style="list-style-type:disc">3. Restart Tunnel in HappyCapy</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-8098-aaa2-e8a61dc37940" class="bulleted-list"><li style="list-style-type:disc">4. Update VSCode to latest version</li></ul></div><div style="display:contents" dir="auto"><h3 id="3146ea04-9986-802d-a893-c22e99c5583c" class="">Q: Cannot save files</h3></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-8002-b705-fc7c3edc8990" class="bulleted-list"><li style="list-style-type:disc">1. Check disk space: run <mark class="highlight-default"><code>df -h</code></mark></li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-805a-87ab-dc674ccea919" class="bulleted-list"><li style="list-style-type:disc">2. Check file permissions: <mark class="highlight-default"><code>ls -la</code></mark></li></ul></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-80f7-9f7b-e609993f50f7" class="bulleted-list"><li style="list-style-type:disc">3. Reconnect tunnel</li></ul></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-80dc-aa9c-e3fc439c3776"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="3146ea04-9986-8078-aa72-e015f3ea5f7b"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><mark class="highlight-yellow_background">💡 Tips</mark></div></figure></div><div style="display:contents" dir="auto"><ul id="3146ea04-9986-80ab-a608-e69981b2f0b1" class="bulleted-list"><li style="list-style-type:disc">Use HappyCapy web for quick daily work; switch to local VSCode for complex projects. Both share the same cloud sandbox, so no file migration is needed.</li></ul></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-8039-bab5-f6add009e9d8"/></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-808e-8e31-fc1a5a9691c7" class="">🎉 You now know the full workflow to connect local VSCode to the HappyCapy cloud sandbox!</p></div><div style="display:contents" dir="auto"><p id="3146ea04-9986-80cf-9125-f36a840479e1" class="">Enjoy your cloud development journey! 🚀</p></div><div style="display:contents" dir="auto"><hr id="3146ea04-9986-804e-b30c-c8e44bcedec0"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><!-- LANG_TOGGLE_START -->
+<style>
+#lang-toggle-select {
+	position: fixed;
+	top: 16px;
+	right: 16px;
+	z-index: 9999;
+	border: 1px solid #d0d7de;
+	background: #ffffff;
+	color: #24292f;
+	border-radius: 999px;
+	padding: 6px 10px;
+	font-size: 13px;
+	line-height: 1;
+	cursor: pointer;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+#lang-toggle-select:hover {
+	background: #f6f8fa;
+}
+</style>
+<script>
+(function () {
+	var KEY = 'site_lang_pref';
+	var pref = localStorage.getItem(KEY);
+	if (!pref) {
+		pref = 'en';
+		localStorage.setItem(KEY, pref);
+	}
+
+	function toEn(pathname) {
+		if (!/\.html$/i.test(pathname)) return pathname;
+		if (/_en\.html$/i.test(pathname)) return pathname;
+		if (/_tw\.html$/i.test(pathname)) return pathname.replace(/_tw\.html$/i, '_en.html');
+		return pathname.replace(/\.html$/i, '_en.html');
+	}
+
+	function toZh(pathname) {
+		if (!/\.html$/i.test(pathname)) return pathname;
+		return pathname.replace(/_en\.html$/i, '.html').replace(/_tw\.html$/i, '.html');
+	}
+
+	function toZhTw(pathname) {
+		if (!/\.html$/i.test(pathname)) return pathname;
+		if (/_tw\.html$/i.test(pathname)) return pathname;
+		if (/_en\.html$/i.test(pathname)) return pathname.replace(/_en\.html$/i, '_tw.html');
+		return pathname.replace(/\.html$/i, '_tw.html');
+	}
+
+	var rawPath = decodeURI(window.location.pathname || '');
+	var isEn = /_en\.html$/i.test(rawPath);
+	var isTw = /_tw\.html$/i.test(rawPath);
+	var isZh = !isEn && !isTw;
+
+	if (pref === 'en' && !isEn) {
+		var enPath = toEn(rawPath);
+		if (enPath !== rawPath) {
+			window.location.replace(encodeURI(enPath) + window.location.search + window.location.hash);
+			return;
+		}
+	}
+
+	if (pref === 'zh' && !isZh) {
+		var zhPath = toZh(rawPath);
+		if (zhPath !== rawPath) {
+			window.location.replace(encodeURI(zhPath) + window.location.search + window.location.hash);
+			return;
+		}
+	}
+
+	if (pref === 'zh-tw' && !isTw) {
+		var twPath = toZhTw(rawPath);
+		if (twPath !== rawPath) {
+			window.location.replace(encodeURI(twPath) + window.location.search + window.location.hash);
+			return;
+		}
+	}
+
+	var select = document.createElement('select');
+	select.id = 'lang-toggle-select';
+	select.setAttribute('aria-label', 'Language');
+
+	var opts = [
+		{ value: 'zh', label: '简体' },
+		{ value: 'zh-tw', label: '繁體' },
+		{ value: 'en', label: 'EN' }
+	];
+	opts.forEach(function (item) {
+		var option = document.createElement('option');
+		option.value = item.value;
+		option.textContent = item.label;
+		select.appendChild(option);
+	});
+
+	select.value = isEn ? 'en' : (isTw ? 'zh-tw' : 'zh');
+
+	select.addEventListener('change', function () {
+		var currentPath = decodeURI(window.location.pathname || '');
+		var targetLang = select.value;
+		var targetPath = currentPath;
+		if (targetLang === 'en') targetPath = toEn(currentPath);
+		if (targetLang === 'zh') targetPath = toZh(currentPath);
+		if (targetLang === 'zh-tw') targetPath = toZhTw(currentPath);
+		localStorage.setItem(KEY, targetLang);
+		window.location.href = encodeURI(targetPath) + window.location.search + window.location.hash;
+	});
+
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(select);
+	});
+})();
+</script>
+<!-- LANG_TOGGLE_END --></body></html>
